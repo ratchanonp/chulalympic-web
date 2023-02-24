@@ -52,7 +52,7 @@ function SportHeader() {
 
     useEffect(() => {
         if (router.isReady) {
-            trigger(id);
+            trigger(id as string);
         }
     }, [router.isReady])
 
