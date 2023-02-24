@@ -70,7 +70,7 @@ function GameCard(props: Props) {
             borderColor="gray.100"
             bg="white"
         >
-            {isShowSportType ? <Text fontSize="3xl">⚽️</Text> : null}
+            {isShowSportType && <Text fontSize="3xl">⚽️</Text>}
             <Flex
                 display={{
                     base: "none",

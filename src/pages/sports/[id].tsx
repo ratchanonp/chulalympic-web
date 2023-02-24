@@ -14,12 +14,11 @@ export default function SportById() {
     const { id } = query;
 
     return (
-        <div>
+        <>
             <Navbar />
             <SportHeader />
             <Container maxW="container.xl" py={5}>
                 <Heading>การแข่งขัน</Heading>
-
                 <Stack gap={10} mt={10}>
                     {days
                         .sort((a, b) => b.getTime() - a.getTime())
@@ -30,7 +29,7 @@ export default function SportById() {
                                     {day.getDate()} {day.toLocaleString("th-TH", { month: "long" })} {day.getFullYear()}
                                 </Heading>
                                 <Stack w="full" borderRadius={10} spacing={3} flex="auto">
-                                    {[...Array(Math.floor(Math.random() * 3 + 1))].map((_, i) => (
+                                    {[...Array(2)].map((_, i) => (
                                         <GameCard isShowSportType={false} key={i} gameData={gameData} />
                                     ))}
                                 </Stack>
@@ -38,7 +37,7 @@ export default function SportById() {
                         ))}
                 </Stack>
             </Container>
-        </div>
+        </>
     );
 }
 
