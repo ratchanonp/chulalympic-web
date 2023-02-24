@@ -1,10 +1,11 @@
 import Navbar from "@/components/common/Navbar/Navbar";
 import GameCard from "@/components/partial/GameCard";
 import { days, gameData } from "@/mock/sport";
-import { useGetSportQuery } from "@/services/sport";
+import { useLazyGetSportQuery } from "@/services/sport";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { Button, Container, Flex, Grid, GridItem, Heading, Icon, Skeleton, Stack, Text } from "@chakra-ui/react";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { IoCalendar } from "react-icons/io5";
 
 export default function SportById() {
@@ -15,7 +16,7 @@ export default function SportById() {
     return (
         <div>
             <Navbar />
-            <SportHeader id={id as string} />
+            <SportHeader />
             <Container maxW="container.xl" py={5}>
                 <Heading>การแข่งขัน</Heading>
 
@@ -41,9 +42,19 @@ export default function SportById() {
     );
 }
 
-function SportHeader({ id }: { id: string }) {
+function SportHeader() {
 
-    const { data, isLoading } = useGetSportQuery(id);
+    const router = useRouter();
+    const { id } = router.query;
+
+    // const { data, isLoading } = useGetSportQuery(id);
+    const [trigger, { data, isLoading }] = useLazyGetSportQuery();
+
+    useEffect(() => {
+        if (router.isReady) {
+            trigger(id);
+        }
+    }, [router.isReady])
 
 
     return (
