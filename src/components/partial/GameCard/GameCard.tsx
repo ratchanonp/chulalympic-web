@@ -105,7 +105,7 @@ function GameCard(props: Props) {
                                     fontFamily="athiti"
                                     fontSize={{ base: "md", md: "2xl" }}
                                     fontWeight="bold"
-                                    w={{ base: 20, md: "auto" }}
+                                    w={{ base: 14, sm: 24, md: "auto" }}
                                 >
                                     {sport.name}
                                 </Text>
@@ -116,7 +116,7 @@ function GameCard(props: Props) {
                                     fontSize="sm"
                                     fontFamily="athiti"
                                     fontWeight="500"
-                                    w={{ base: 20, md: "auto" }}
+                                    w={{ base: 14, sm: 24, md: "auto" }}
                                 >
                                     ประเภท
                                 </Text>
