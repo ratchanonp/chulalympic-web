@@ -7,6 +7,17 @@ import { Grid, Heading } from "@chakra-ui/react";
 function FacultyPage() {
     const { data, isLoading } = useGetFacultiesQuery();
 
+    const reponsiveGrid = {
+        sm: "repeat(1, 1fr)",
+        md: "repeat(2, 1fr)",
+        lg: "repeat(3, 1fr)",
+    }
+
+    if (isLoading) return;
+    if (!data) return;
+
+    // Sort faculties by name
+    // data.sort((a, b) => a.name.localeCompare(b.name));
 
     return (
         <>
@@ -15,19 +26,13 @@ function FacultyPage() {
                 <Heading color="pink.400" size="4xl" mb={10}>
                     คณะ / สถาบัน
                 </Heading>
-                {
-                    isLoading
-                        ? (<Grid gridTemplateColumns="repeat(3, 1fr)" gap={5}>
-                            {[...Array(6)].map((_, idx) => (
-                                <FacultyCard key={idx} isLoading />
-                            ))}
-                        </Grid>)
-                        : (<Grid gridTemplateColumns="repeat(3, 1fr)" gap={5}>
-                            {data?.map((faculty, idx) => (
-                                <FacultyCard key={idx} faculty={faculty} />
-                            ))}
-                        </Grid>)
-                }
+                <Grid gridTemplateColumns={reponsiveGrid} gap={3}>
+                    {isLoading ? (
+                        [...Array(3)].map((_, i) => (<FacultyCard key={i} isLoading />))
+                    ) : (
+                        data.map((faculty) => (<FacultyCard key={faculty.id} faculty={faculty} />))
+                    )}
+                </Grid>
             </Container>
         </>
     );

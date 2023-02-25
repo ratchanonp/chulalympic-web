@@ -1,7 +1,8 @@
 import { Faculty } from '@/interfaces/faculty.interface'
 import { getInitialLetter } from '@/utils/mapping'
-import { Flex, Heading, Link, Skeleton, SkeletonCircle } from '@chakra-ui/react'
+import { Flex, Heading, Icon, Link, Skeleton, SkeletonCircle, Text } from '@chakra-ui/react'
 import NextLink from 'next/link'
+import { FaArrowRight } from 'react-icons/fa'
 
 type Props = {
     isLoading?: boolean
@@ -23,9 +24,10 @@ const FacultyCard = (props: Props) => {
     let { id, name } = faculty
 
     return (
-        <Link href={`/faculty/${id}`} as={NextLink} display="flex" _hover={{ textDecor: "none" }} fontFamily="athiti" border="1px solid" borderColor="gray.100" borderRadius="lg" p={5} alignItems="center" gap={5}>
-            <Flex borderRadius="full" w={10} h={10} justifyContent="center" alignItems="center" fontWeight="bold" fontSize="3xl" bgColor="gray.100">{getInitialLetter({ name: name, })}</Flex>
-            <Heading noOfLines={1} variant="h2" size="lg" fontWeight="300">{name}</Heading>
+        <Link data-group href={`/faculty/${id}`} as={NextLink} display="flex" _hover={{ textDecor: "none" }} fontFamily="athiti" border="1px solid" borderColor="gray.100" borderRadius="lg" p={5} alignItems="center" gap={5}>
+            <Flex fontWeight="bold" fontSize="5xl">{getInitialLetter({ name: name, })}</Flex>
+            <Heading noOfLines={1} variant="h2" fontSize="xl" size="lg" fontWeight="300">{name}</Heading>
+            <Text ml="auto" transition="all ease-in-out 0.3s" _groupHover={{ transform: "scale(1.1)", textColor: "pink.400" }} ><Icon w={8} h={8} as={FaArrowRight} /></Text>
         </Link>
     )
 }

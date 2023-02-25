@@ -1,15 +1,15 @@
 export interface Sport {
     code: string;
     name: string;
-    category: SportCategory[];
+    category?: SportCategory[];
     toString(): string;
 }
 
 export interface SportCategory {
     code: string;
     name: string;
+    sportCode: "AH"
 }
 
-export type Sports = Sport[];
-export type SportsResponse = Sports;
+export type SportsResponse = Sport[];
 export type SportResponse = Sport;

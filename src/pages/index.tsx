@@ -1,14 +1,13 @@
 import Navbar from "@/components/common/Navbar/Navbar";
 import { DateSelector } from "@/components/partial/DateSelector/DataSelector";
 import { Filter } from "@/components/partial/Filter/Filter";
-import GameCard from "@/components/partial/GameCard";
-import { gameData } from "@/mock/sport";
 import { ChevronDownIcon, CloseIcon } from "@chakra-ui/icons";
 import { Button, Container, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Heading, Icon, Stack, Text, useDisclosure } from "@chakra-ui/react";
 import Lottie from "lottie-react";
 import { BiFilterAlt } from "react-icons/bi";
 import { MdSportsHandball } from "react-icons/md";
 
+import { GameCardList } from "@/components/common/GameCardList";
 import animation from "@/lottie/Hero.json";
 
 
@@ -82,11 +81,7 @@ function HomePage() {
                             >
                                 <Filter />
                             </Flex>
-                            <Stack w="full" borderRadius={10} spacing={3} flex="auto">
-                                {[...Array(10)].map((_, i) => (
-                                    <GameCard key={i} gameData={gameData} />
-                                ))}
-                            </Stack>
+                            <GameCardList />
                         </Flex>
                     </Stack>
                 </Container>

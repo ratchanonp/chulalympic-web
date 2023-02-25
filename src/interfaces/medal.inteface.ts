@@ -7,5 +7,4 @@ export interface Medal {
     total: number;
 }
 
-export type Medals = Medal[];
-export type MedalsResponse = Medals;
+export type MedalsResponse = Medal[];

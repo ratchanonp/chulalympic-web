@@ -1,10 +1,16 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Checkbox, Flex, Heading, Icon, Stack } from "@chakra-ui/react";
+import { Sport } from "@/interfaces/sport.interface";
+import { Venue } from "@/interfaces/venue.interface";
+import { useGetSportsQuery } from "@/services/sport";
+import { useGetVenuesQuery } from "@/services/venue";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Checkbox, Flex, Heading, Icon, Skeleton, Stack } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 import { IoFootball, IoLocationSharp } from "react-icons/io5";
-import { sportTypes } from "../../../mock/sport";
-import { venue } from "../../../mock/venue";
 
 export function Filter() {
+
+    const { data: sports, isLoading: sportsLoading } = useGetSportsQuery();
+    const { data: venues, isLoading: venuesLoading } = useGetVenuesQuery();
+
     return (
         <Accordion
             w={{
@@ -35,7 +41,7 @@ export function Filter() {
                 </AccordionButton>
                 <AccordionPanel p={5}>
                     <Stack>
-                        <FilterItems items={sportTypes} />
+                        <FilterItems items={sports as Sport[]} isLoading={sportsLoading} />
                     </Stack>
                 </AccordionPanel>
             </AccordionItem>
@@ -46,7 +52,7 @@ export function Filter() {
                 </AccordionButton>
                 <AccordionPanel p={5}>
                     <Stack>
-                        <FilterItems items={venue} />
+                        <FilterItems items={venues as Venue[]} isLoading={venuesLoading} />
                     </Stack>
                 </AccordionPanel>
             </AccordionItem>
@@ -54,12 +60,23 @@ export function Filter() {
     );
 }
 
-function FilterItems({ items }: { items: string[] }) {
+function FilterItems<T extends { name: string }>({ items, isLoading }: { items: T[], isLoading: boolean }) {
+
+    if (isLoading || !items) return (
+        <>
+            {[...Array(5)].map((i) => (
+                <Checkbox defaultChecked={true} colorScheme="pink" key={i}>
+                    <Skeleton h="24px" w={100} />
+                </Checkbox>
+            ))}
+        </>
+    );
+
     return (
         <>
-            {items.slice(0, 15).map(item => (
-                <Checkbox defaultChecked={true} colorScheme="pink" key={item}>
-                    {item}
+            {items.map(({ name }) => (
+                <Checkbox defaultChecked={true} colorScheme="pink" key={name}>
+                    {name}
                 </Checkbox>
             ))}
         </>
