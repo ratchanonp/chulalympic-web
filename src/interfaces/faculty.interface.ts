@@ -3,4 +3,5 @@ export interface Faculty {
     name: string;
 }
 
-export type FacultyResponse = Faculty[];
+export type FacultyResponse = Faculty;
+export type FacultiesResponse = Faculty[];
