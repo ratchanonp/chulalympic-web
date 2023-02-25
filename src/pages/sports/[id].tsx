@@ -1,5 +1,5 @@
 import Navbar from "@/components/common/Navbar/Navbar";
-import GameCard from "@/components/partial/GameCard/GameCard";
+import { GameCard } from "@/components/partial/GameCard";
 import { days, gameData } from "@/mock/sport";
 import { useLazyGetSportQuery } from "@/services/sport";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
