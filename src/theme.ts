@@ -11,6 +11,13 @@ const athiti = Athiti({
     subsets: ["thai", "latin"],
 });
 
+const breakpoints = {
+    sm: "30em",
+    md: "48em",
+    lg: "67em",
+    xl: "80em",
+}
+
 export const theme = extendTheme({
     colors: {
         brand: {
@@ -23,4 +30,5 @@ export const theme = extendTheme({
         heading: athiti.style.fontFamily,
         default: athiti.style.fontFamily,
     },
+    breakpoints
 });
