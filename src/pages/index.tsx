@@ -2,14 +2,27 @@ import Navbar from "@/components/common/Navbar/Navbar";
 import { DateSelector } from "@/components/partial/DateSelector/DataSelector";
 import { Filter } from "@/components/partial/Filter/Filter";
 import { ChevronDownIcon, CloseIcon } from "@chakra-ui/icons";
-import { Button, Container, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Heading, Icon, Stack, Text, useDisclosure } from "@chakra-ui/react";
+import {
+    Button,
+    Container,
+    Drawer,
+    DrawerBody,
+    DrawerContent,
+    DrawerHeader,
+    DrawerOverlay,
+    Flex,
+    Heading,
+    Icon,
+    Stack,
+    Text,
+    useDisclosure
+} from "@chakra-ui/react";
 import Lottie from "lottie-react";
 import { BiFilterAlt } from "react-icons/bi";
 import { MdSportsHandball } from "react-icons/md";
 
-import { GameCardList } from "@/components/common/GameCardList";
 import animation from "@/lottie/Hero.json";
-
+import { GameCardList } from "@/components/partial/GameCard/GameCardList";
 
 function HomePage() {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -27,10 +40,21 @@ function HomePage() {
                             }}
                         />
                         <Heading textAlign="center">
-                            <Text fontSize="6xl" as="span" color="pink.400" textTransform="uppercase">
+                            <Text
+                                fontSize="6xl"
+                                as="span"
+                                color="pink.400"
+                                textTransform="uppercase"
+                            >
                                 Chula
                             </Text>
-                            <Text as="span" textDecor="underline" color="gray.400" textDecorationColor="pink.400" size="6xl">
+                            <Text
+                                as="span"
+                                textDecor="underline"
+                                color="gray.400"
+                                textDecorationColor="pink.400"
+                                size="6xl"
+                            >
                                 lympic
                             </Text>
                             <Text color="pink.400" fontWeight="black" fontSize="5xl">
@@ -53,7 +77,11 @@ function HomePage() {
                             href="#today"
                         >
                             การแข่งขัน
-                            <ChevronDownIcon fontSize="xl" textAlign="center" color="pink.400" />
+                            <ChevronDownIcon
+                                fontSize="xl"
+                                textAlign="center"
+                                color="pink.400"
+                            />
                         </Button>
                     </Stack>
                 </Container>
@@ -63,12 +91,20 @@ function HomePage() {
                     <Stack position="relative">
                         <Stack bg="gray.50" zIndex={10} position="sticky" top={0} pb={5}>
                             <Flex alignItems="center" justifyContent="space-between" mt={5}>
-                                <Heading display="flex" alignItems="center" fontFamily="athiti" variant="h2" fontWeight="normal">
+                                <Heading
+                                    display="flex"
+                                    alignItems="center"
+                                    fontFamily="athiti"
+                                    variant="h2"
+                                    fontWeight="normal"
+                                >
                                     <Icon as={MdSportsHandball} mr={1} />
                                     การแข่งขัน
                                 </Heading>
-                                <Button onClick={onOpen}><Icon mr={2} w={5} h={5} as={BiFilterAlt} />
-                                    <Text>Filter</Text></Button>
+                                <Button onClick={onOpen}>
+                                    <Icon mr={2} w={5} h={5} as={BiFilterAlt} />
+                                    <Text>Filter</Text>
+                                </Button>
                             </Flex>
                             <DateSelector />
                         </Stack>
@@ -76,7 +112,7 @@ function HomePage() {
                             <Flex
                                 display={{
                                     base: "none",
-                                    md: "flex",
+                                    lg: "flex",
                                 }}
                             >
                                 <Filter />

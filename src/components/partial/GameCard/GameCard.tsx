@@ -1,5 +1,5 @@
 import { Game, GameStatus, Participant } from "@/interfaces/game.interface";
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Badge, Flex, HStack, Icon, Stack, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue, VStack } from "@chakra-ui/react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Badge, Box, Flex, HStack, Icon, Stack, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue, VStack } from "@chakra-ui/react";
 import { AiFillClockCircle } from "react-icons/ai/";
 import GameCardSkeleton from "./GameCardSkeleton";
 
@@ -37,16 +37,20 @@ function GameCard(props: Props) {
 
     const { isShowSportType = true, isLoading, gameData } = props;
 
-    if (isLoading || !gameData) return <GameCardSkeleton />;
+    if (isLoading) return (<GameCardSkeleton />);
+    if (!gameData) return (<></>);
 
     const { participant, sport, sportCategory, start, venue, status } = gameData;
 
     return (
-        <Accordion defaultIndex={[0]} allowMultiple>
+        <Accordion allowMultiple>
             <AccordionItem
                 w="100%"
                 borderRadius={10}
-                p={5}
+                p={{
+                    base: 2,
+                    md: 5,
+                }}
                 border="2px"
                 borderColor="gray.100"
                 bg="white"
@@ -55,26 +59,96 @@ function GameCard(props: Props) {
                     <HStack
                         w="100%"
                         display="flex"
-                        spacing={16}
+                        spacing={{
+                            base: 0,
+                            md: 16,
+                        }}
                     >
-                        <HStack flex={1} spacing={16} textAlign="left">
+                        <HStack
+                            flex={1}
+                            spacing={{
+                                base: 5,
+                                md: 16,
+                            }}
+                            textAlign="left"
+                        >
                             <VStack alignItems="left" spacing={0}>
-                                <Text textColor="gray.400" fontSize="sm" fontFamily="athiti" fontWeight="500">เวลา</Text>
-                                <Badge fontFamily="athiti" colorScheme="pink" textColor="pink.400" fontSize="2xl" fontWeight="bold">{getTime(start)}</Badge>
+                                <Text
+                                    textColor="gray.400"
+                                    fontSize="sm"
+                                    fontFamily="athiti"
+                                    fontWeight="500"
+                                >
+                                    เวลา
+                                </Text>
+                                <Badge
+                                    fontFamily="athiti"
+                                    colorScheme="pink"
+                                    textColor="pink.400"
+                                    fontSize={{ base: "md", md: "2xl" }}
+                                    fontWeight="bold"
+                                >
+                                    {getTime(start)}
+                                </Badge>
                             </VStack>
-                            <VStack alignItems="left" spacing={0} w="80px">
-                                <Text textColor="gray.400" fontSize="sm" fontFamily="athiti" fontWeight="500">กีฬา</Text>
-                                <Text fontFamily="athiti" fontSize="2xl" fontWeight="bold">{sport.name}</Text>
+
+                            <VStack spacing={0} alignItems="left">
+                                <Text
+                                    textColor="gray.400"
+                                    fontSize="sm"
+                                    fontFamily="athiti"
+                                    fontWeight="500"
+                                >
+                                    กีฬา
+                                </Text>
+                                <Text
+                                    fontFamily="athiti"
+                                    fontSize={{ base: "md", md: "2xl" }}
+                                    fontWeight="bold"
+                                    w={{ base: 20, md: "auto" }}
+                                >
+                                    {sport.name}
+                                </Text>
                             </VStack>
-                            <VStack alignItems="left" spacing={0} w="100px">
-                                <Text textColor="gray.400" fontSize="sm" fontFamily="athiti" fontWeight="500">ประเภท</Text>
-                                <Text fontFamily="athiti" fontSize="2xl" fontWeight="bold">{sportCategory.name}</Text>
+                            <VStack spacing={0} alignItems="left">
+                                <Text
+                                    textColor="gray.400"
+                                    fontSize="sm"
+                                    fontFamily="athiti"
+                                    fontWeight="500"
+                                    w={{ base: 20, md: "auto" }}
+                                >
+                                    ประเภท
+                                </Text>
+                                <Text
+                                    fontFamily="athiti"
+                                    fontSize={{ base: "md", md: "2xl" }}
+                                    fontWeight="bold"
+                                >
+                                    {sportCategory.name}
+                                </Text>
                             </VStack>
-                            <VStack alignItems="left" spacing={0} w="100px">
-                                <Text textColor="gray.400" fontSize="sm" fontFamily="athiti" fontWeight="500">สถานที่</Text>
-                                <Text fontFamily="athiti" fontSize="2xl" fontWeight="bold">{venue.name}</Text>
+                            <VStack spacing={0} alignItems="left">
+                                <Text
+                                    textColor="gray.400"
+                                    fontSize="sm"
+                                    fontFamily="athiti"
+                                    fontWeight="500"
+                                >
+                                    สถานที่
+                                </Text>
+                                <Text
+                                    fontFamily="athiti"
+                                    fontSize={{ base: "md", md: "2xl" }}
+                                    fontWeight="bold"
+                                >
+                                    {venue.name}
+                                </Text>
                             </VStack>
-                            <Status status={status} />
+
+                            <Box display={{ base: "none", md: "block" }}>
+                                <Status status={status} />
+                            </Box>
                         </HStack>
                         <Flex ml="auto">
                             <AccordionIcon />
