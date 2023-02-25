@@ -57,20 +57,20 @@ function GameCard(props: Props) {
                         display="flex"
                         spacing={16}
                     >
-                        <HStack flex={1} spacing={16}>
+                        <HStack flex={1} spacing={16} textAlign="left">
                             <VStack alignItems="left" spacing={0}>
                                 <Text textColor="gray.400" fontSize="sm" fontFamily="athiti" fontWeight="500">เวลา</Text>
                                 <Badge fontFamily="athiti" colorScheme="pink" textColor="pink.400" fontSize="2xl" fontWeight="bold">{getTime(start)}</Badge>
                             </VStack>
-                            <VStack alignItems="left" spacing={0}>
+                            <VStack alignItems="left" spacing={0} w="80px">
                                 <Text textColor="gray.400" fontSize="sm" fontFamily="athiti" fontWeight="500">กีฬา</Text>
                                 <Text fontFamily="athiti" fontSize="2xl" fontWeight="bold">{sport.name}</Text>
                             </VStack>
-                            <VStack alignItems="left" spacing={0}>
+                            <VStack alignItems="left" spacing={0} w="100px">
                                 <Text textColor="gray.400" fontSize="sm" fontFamily="athiti" fontWeight="500">ประเภท</Text>
                                 <Text fontFamily="athiti" fontSize="2xl" fontWeight="bold">{sportCategory.name}</Text>
                             </VStack>
-                            <VStack alignItems="left" spacing={0}>
+                            <VStack alignItems="left" spacing={0} w="100px">
                                 <Text textColor="gray.400" fontSize="sm" fontFamily="athiti" fontWeight="500">สถานที่</Text>
                                 <Text fontFamily="athiti" fontSize="2xl" fontWeight="bold">{venue.name}</Text>
                             </VStack>

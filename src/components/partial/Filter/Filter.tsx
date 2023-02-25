@@ -64,7 +64,7 @@ function FilterItems<T extends { name: string }>({ items, isLoading }: { items: 
 
     if (isLoading || !items) return (
         <>
-            {[...Array(5)].map((i) => (
+            {[...Array(5)].map((_, i) => (
                 <Checkbox defaultChecked={true} colorScheme="pink" key={i}>
                     <Skeleton h="24px" w={100} />
                 </Checkbox>
@@ -74,8 +74,8 @@ function FilterItems<T extends { name: string }>({ items, isLoading }: { items: 
 
     return (
         <>
-            {items.map(({ name }) => (
-                <Checkbox defaultChecked={true} colorScheme="pink" key={name}>
+            {items.map(({ name }, idx) => (
+                <Checkbox defaultChecked={true} colorScheme="pink" key={idx}>
                     {name}
                 </Checkbox>
             ))}
