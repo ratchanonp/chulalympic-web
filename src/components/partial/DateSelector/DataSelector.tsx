@@ -1,11 +1,15 @@
 import RadioCard from "@/components/common/RadioCard/RadioCard";
-import { dayOfWeekTHFormat, days, DDMMYYY_TH_FORMAT, monthTHFormat, today } from "@/mock/sport";
+import { useAppSelector } from "@/hooks";
+import { dayOfWeekTHFormat, days, DDMMYYY_TH_FORMAT, monthTHFormat } from "@/mock/sport";
 import { Flex, Text, useRadioGroup } from "@chakra-ui/react";
 
 export function DateSelector() {
+
+    const { date } = useAppSelector((state) => state.filter)
+
     const { getRootProps, getRadioProps } = useRadioGroup({
         name: "date",
-        defaultValue: DDMMYYY_TH_FORMAT.format(today),
+        defaultValue: DDMMYYY_TH_FORMAT.format(date),
         onChange: console.log,
     });
 

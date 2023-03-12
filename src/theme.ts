@@ -23,6 +23,7 @@ export const theme = extendTheme({
         brand: {
             500: "#DB5F8E",
         },
+        bronze: "#CD7F32",
     },
     fonts: {
         athiti: athiti.style.fontFamily,

@@ -23,7 +23,7 @@ function FacultyPage() {
         <>
             <Navbar />
             <Container>
-                <Heading color="pink.400" size="4xl" mb={10}>
+                <Heading color="pink.400" size="4xl" mb={10} filter="drop-shadow(5px 5px 0px #FED7E2);" >
                     คณะ / สถาบัน
                 </Heading>
                 <Grid gridTemplateColumns={reponsiveGrid} gap={3}>

@@ -15,7 +15,7 @@ export default function SportPage() {
         <div>
             <Navbar />
             <Container maxW="container.xl" mb={10}>
-                <Heading as="h1" fontFamily="athiti" size="4xl" color="pink.400" my={10}>
+                <Heading as="h1" fontFamily="athiti" size="4xl" color="pink.400" my={10} filter="drop-shadow(5px 5px 0px #FED7E2);" >
                     กีฬา
                 </Heading>
                 <Grid

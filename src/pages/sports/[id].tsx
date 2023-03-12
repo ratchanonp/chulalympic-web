@@ -3,7 +3,7 @@ import { GameCard } from "@/components/partial/GameCard";
 import { days, gameData } from "@/mock/sport";
 import { useLazyGetSportQuery } from "@/services/sport";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
-import { Button, Container, Flex, Grid, GridItem, Heading, Icon, Skeleton, Stack, Text } from "@chakra-ui/react";
+import { Button, Container, Flex, Heading, Icon, Skeleton, Stack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { IoCalendar } from "react-icons/io5";
@@ -67,7 +67,7 @@ function SportHeader() {
                     <Heading as="h1" size="4xl" mt={10} display="flex" alignItems="center">{data?.name}</Heading>
                 </Skeleton>
 
-                <Stack
+                {/* <Stack
                     mt={{
                         base: 5,
                         md: 10,
@@ -134,7 +134,7 @@ function SportHeader() {
                             </Stack>
                         </GridItem>
                     </Grid>
-                </Stack>
+                </Stack> */}
             </Container>
         </Flex >
     );

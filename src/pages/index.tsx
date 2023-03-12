@@ -21,11 +21,16 @@ import Lottie from "lottie-react";
 import { BiFilterAlt } from "react-icons/bi";
 import { MdSportsHandball } from "react-icons/md";
 
-import animation from "@/lottie/Hero.json";
 import { GameCardList } from "@/components/partial/GameCard/GameCardList";
+import { useAppSelector } from "@/hooks";
+import animation from "@/lottie/Hero.json";
 
 function HomePage() {
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const { date, sports, venues, faculty } = useAppSelector((state) => state.filter)
+
+
 
     return (
         <>
