@@ -17,7 +17,13 @@ export function DateSelector() {
         defaultValue: DDMMYYY_TH_FORMAT.format(selectDate),
         onChange: (value) => {
             const spilt = value.split("/");
-            const date = new Date(Number(spilt[2]) - 543, Number(spilt[1]) - 1, Number(spilt[0]));
+
+            // new date with timezone bangkok
+            const date = new Date(Date.UTC(+(spilt[2]) - 543, +(spilt[1]) - 1, +(spilt[0])));
+            date.setUTCHours(0, 0, 0, 0);
+
+            console.log(date.toISOString())
+
             dispatch(setDate(date));
         },
     });
@@ -30,10 +36,10 @@ export function DateSelector() {
 
     // map and parse from staind and remove hour, minute, second, millisecond 
     const dates = data.map(dateString => {
-        new Date(dateString);
         // rmove hour, minute, second, millisecond
-        const date = new Date(dateString);
-        date.setHours(0, 0, 0, 0);
+        const spilt = dateString.split("-");
+        const date = new Date(Date.UTC(+(spilt[0]), +(spilt[1]) - 1, +(spilt[2])));
+        date.setUTCHours(0, 0, 0, 0);
         return date;
     })
 

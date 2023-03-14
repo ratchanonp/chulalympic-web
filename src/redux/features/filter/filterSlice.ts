@@ -3,8 +3,9 @@
 import { FilterState } from "@/interfaces/filter.interface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+// Set time to 00:00:00:000 timezone to UTC
 const todayWithoutTime = new Date();
-todayWithoutTime.setHours(0, 0, 0, 0);
+todayWithoutTime.setUTCHours(0, 0, 0, 0);
 
 const initialFilterState: FilterState = {
     date: todayWithoutTime,
