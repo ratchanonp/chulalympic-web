@@ -3,6 +3,7 @@ import DataTable from "@/components/common/DataTable/DataTable";
 import Navbar from "@/components/common/Navbar/Navbar";
 import { useGetMedalsQuery } from "@/services/medal";
 import { Box, Heading, Link, Text } from "@chakra-ui/react";
+import Head from "next/head";
 import NextLink from "next/link";
 import { Column } from "react-table";
 
