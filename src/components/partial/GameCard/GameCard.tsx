@@ -40,7 +40,7 @@ function GameCard(props: Props) {
     if (isLoading) return (<GameCardSkeleton />);
     if (!gameData) return (<></>);
 
-    const { participant, sport, sportCategory, start, venue, status } = gameData;
+    const { participant, sport, sportCategory, start, venue, status, id } = gameData;
 
     console.log(gameData)
 
@@ -59,13 +59,16 @@ function GameCard(props: Props) {
             >
                 <AccordionButton w="100%" _hover={{}}>
                     <VStack w="100%" justifyContent="start" alignItems="start">
-                        <HStack>
+
+                        <Flex w="full">
                             <Status status={status} />
-                            <Text display="flex" alignItems="center" justifyContent="center" fontFamily="athiti" fontSize={{
+                            <Text ml={2} display="flex" alignItems="center" justifyContent="center" fontFamily="athiti" fontSize={{
                                 base: "xs",
                                 md: "md",
                             }}> <Icon as={AiFillEnvironment} mr={1} /> {venue.name} </Text>
-                        </HStack>
+
+
+                        </Flex>
                         <HStack
                             w="100%"
                             display="flex"
@@ -134,6 +137,7 @@ function GameCard(props: Props) {
                                 }
                             </Flex>
                         </HStack>
+                        <Text fontSize="sm" fontFamily="athiti" color="gray.300">{id}</Text>
                     </VStack>
                     {participant.length > 2 && (<Flex ml="auto" pl={2}>
                         <AccordionIcon />
