@@ -22,14 +22,17 @@ import { BiFilterAlt } from "react-icons/bi";
 import { MdSportsHandball } from "react-icons/md";
 
 import { GameCardList } from "@/components/partial/GameCard/GameCardList";
-import { useAppSelector } from "@/hooks";
 import animation from "@/lottie/Hero.json";
+import Head from "next/head";
 
 function HomePage() {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
         <>
+            <Head>
+                <title>Chula Olympic 2023</title>
+            </Head>
             <Stack justifyContent="stretch" alignItems="center" h="100vh">
                 <Navbar />
                 <Container maxW="container.xl">

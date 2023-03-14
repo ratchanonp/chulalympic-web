@@ -2,6 +2,7 @@ import Navbar from "@/components/common/Navbar/Navbar";
 import { useGetSportsQuery } from "@/services/sport";
 import { filterByInitialLetter, getInitialLetters } from "@/utils/mapping";
 import { Container, Grid, GridItem, Heading, Link, ListItem, UnorderedList } from "@chakra-ui/react";
+import Head from "next/head";
 
 
 export default function SportPage() {
@@ -13,6 +14,9 @@ export default function SportPage() {
 
     return (
         <div>
+            <Head>
+                <title>Chula Olympic 2023 | กีฬา</title>
+            </Head>
             <Navbar />
             <Container maxW="container.xl" mb={10}>
                 <Heading as="h1" fontFamily="athiti" size="4xl" color="pink.400" my={10} filter="drop-shadow(5px 5px 0px #FED7E2);" >

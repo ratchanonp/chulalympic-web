@@ -3,6 +3,7 @@ import Navbar from "@/components/common/Navbar/Navbar";
 import { FacultyCard } from "@/components/partial/FacultyCard";
 import { useGetFacultiesQuery } from "@/services/faculty";
 import { Grid, Heading } from "@chakra-ui/react";
+import Head from "next/head";
 
 function FacultyPage() {
     const { data, isLoading } = useGetFacultiesQuery();
@@ -21,6 +22,9 @@ function FacultyPage() {
 
     return (
         <>
+            <Head>
+                <title>Chula Olympic 2023 | คณะ/สถาบัน</title>
+            </Head>
             <Navbar />
             <Container>
                 <Heading color="pink.400" size="4xl" mb={10} filter="drop-shadow(5px 5px 0px #FED7E2);" >

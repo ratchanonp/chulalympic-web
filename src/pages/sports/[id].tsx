@@ -5,6 +5,7 @@ import { useLazyGetGamesQuery } from "@/services/games";
 import { useLazyGetSportQuery } from "@/services/sport";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { Button, Container, Flex, Heading, Icon, Skeleton, Stack, Text } from "@chakra-ui/react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { IoCalendar } from "react-icons/io5";
@@ -13,6 +14,9 @@ import { SlMagnifier } from "react-icons/sl";
 export default function SportById() {
     return (
         <>
+            <Head>
+                <title>Chula Olympic 2023 | กีฬา</title>
+            </Head>
             <Navbar />
             <SportHeader />
             <Container maxW="container.xl" py={5}>

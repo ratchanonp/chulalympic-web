@@ -51,6 +51,9 @@ export default function MedalsPage() {
 
     return (
         <>
+            <Head>
+                <title>Chula Olympic 2023 | สรุปเหรียญ    </title>
+            </Head>
             <Navbar />
             <Container>
                 <Heading as="h1" fontFamily="athiti" size="4xl" color="pink.400" mb={10} filter="drop-shadow(5px 5px 0px #FED7E2);">
