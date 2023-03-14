@@ -35,6 +35,7 @@ function RadioCard(props: Props) {
                 justifyContent="center"
                 alignItems="center"
                 textAlign="center"
+                bgColor="gray.50"
             >
                 {props.children}
             </Box>

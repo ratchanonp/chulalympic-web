@@ -1,18 +1,16 @@
 import Navbar from "@/components/common/Navbar/Navbar";
 import { GameCard } from "@/components/partial/GameCard";
-import { days, gameData } from "@/mock/sport";
+import GameCardSkeleton from "@/components/partial/GameCard/GameCardSkeleton";
+import { useLazyGetGamesQuery } from "@/services/games";
 import { useLazyGetSportQuery } from "@/services/sport";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
-import { Button, Container, Flex, Heading, Icon, Skeleton, Stack } from "@chakra-ui/react";
+import { Button, Container, Flex, Heading, Icon, Skeleton, Stack, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { IoCalendar } from "react-icons/io5";
+import { SlMagnifier } from "react-icons/sl";
 
 export default function SportById() {
-    const router = useRouter();
-    const { query } = router;
-    const { id } = query;
-
     return (
         <>
             <Navbar />
@@ -20,21 +18,7 @@ export default function SportById() {
             <Container maxW="container.xl" py={5}>
                 <Heading>การแข่งขัน</Heading>
                 <Stack gap={10} mt={10}>
-                    {days
-                        .sort((a, b) => b.getTime() - a.getTime())
-                        .map((day, i) => (
-                            <Stack key={i} gap={1}>
-                                <Heading size="md" color="gray.400" fontWeight="medium" alignItems="center" display="flex">
-                                    <Icon mr={2} as={IoCalendar} />
-                                    {day.getDate()} {day.toLocaleString("th-TH", { month: "long" })} {day.getFullYear()}
-                                </Heading>
-                                <Stack w="full" borderRadius={10} spacing={3} flex="auto">
-                                    {[...Array(2)].map((_, i) => (
-                                        <GameCard isShowSportType={false} key={i} gameData={gameData} />
-                                    ))}
-                                </Stack>
-                            </Stack>
-                        ))}
+                    <SportGames />
                 </Stack>
             </Container>
         </>
@@ -137,5 +121,76 @@ function SportHeader() {
                 </Stack> */}
             </Container>
         </Flex >
+    );
+}
+
+function SportGames() {
+    const router = useRouter()
+    const { id } = router.query
+
+    const [trigger, { isLoading, data: games }] = useLazyGetGamesQuery();
+
+
+    useEffect(() => {
+        if (router.isReady && id) {
+            const filter = {
+                sports: [id as string]
+            }
+            trigger(filter)
+
+        }
+    }, [router.isReady])
+
+    if (isLoading) {
+        return (
+            <Stack w="full" borderRadius={10} spacing={3} flex="auto">
+                {[...Array(5)].map((_, i) => (
+                    <GameCardSkeleton key={i} />
+                ))}
+            </Stack>
+        );
+    }
+
+    if (!games) return (
+        <Stack w="full" borderRadius={10} spacing={3} flex="auto" bgColor="white" py={4} alignItems="center" justifyContent="center">
+            <Icon as={SlMagnifier} w={20} h={20} color="gray.400" />
+            <Text textAlign="center" fontSize="2xl" fontFamily="athiti" fontWeight="medium" >ไม่พบผลการค้นหา</Text>
+        </Stack>
+    )
+
+
+    // Group games by date
+    const gamesByDate = games.reduce((acc, game) => {
+        const date = new Date(game.start).toLocaleDateString()
+        if (!acc[date]) {
+            acc[date] = []
+        }
+        acc[date].push(game)
+        return acc
+    }, {} as { [key: string]: any[] })
+
+
+    return (
+        <Stack w="full" borderRadius={10} spacing={3} flex="auto">
+            {Object.entries(gamesByDate).map(([date, games]) => (
+                <Stack key={date} w="full" borderRadius={10} spacing={3} flex="auto" bgColor="white" mt={4}>
+                    <Heading size="md" color="gray.400" fontWeight="medium" alignItems="center" display="flex">
+                        <Icon mr={2} as={IoCalendar} />
+                        {
+                            new Date(date).toLocaleDateString('th-TH', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                            })
+                        }
+                    </Heading>
+                    <Stack w="full" borderRadius={10} spacing={3} flex="auto">
+                        {games.map((game, i) => (
+                            <GameCard key={i} gameData={game} />
+                        ))}
+                    </Stack>
+                </Stack>
+            ))}
+        </Stack>
     );
 }

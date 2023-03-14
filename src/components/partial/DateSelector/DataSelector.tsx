@@ -1,48 +1,58 @@
 import RadioCard from "@/components/common/RadioCard/RadioCard";
-import { useAppSelector } from "@/hooks";
-import { dayOfWeekTHFormat, days, DDMMYYY_TH_FORMAT, monthTHFormat } from "@/mock/sport";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { dayOfWeekTHFormat, DDMMYYY_TH_FORMAT, monthTHFormat } from "@/mock/sport";
+import { setDate } from "@/redux/features/filter/filterSlice";
+import { useGetDatesQuery } from "@/services/games";
 import { Flex, Text, useRadioGroup } from "@chakra-ui/react";
+import { DateSelectorLoading } from "./DataSelector.loading";
 
 export function DateSelector() {
 
-    const { date } = useAppSelector((state) => state.filter)
+    let { date: selectDate } = useAppSelector((state) => state.filter)
+    const dispatch = useAppDispatch();
+    const { data, isLoading, error } = useGetDatesQuery();
 
-    const { getRootProps, getRadioProps } = useRadioGroup({
+    const radioGroup = useRadioGroup({
         name: "date",
-        defaultValue: DDMMYYY_TH_FORMAT.format(date),
-        onChange: console.log,
+        defaultValue: DDMMYYY_TH_FORMAT.format(new Date()),
+        onChange: (value) => {
+            dispatch(setDate(new Date(value)));
+        },
     });
 
+    const { getRootProps, getRadioProps, setValue, value } = radioGroup;
     const group = getRootProps();
 
-    const sxHideScrollbar = {
-        "&::-webkit-scrollbar": {
-            display: "none",
-        },
-        "&::-webkit-scrollbar-track": {
-            display: "none",
-        },
-        "&::-webkit-scrollbar-thumb": {
-            display: "none",
-        },
-    };
+
+    if (isLoading || error || !data) return <DateSelectorLoading />
+
+    const dates = data.map(date => new Date(date));
+    selectDate = dates.find(date => date >= selectDate) || dates.find(date => date <= selectDate) || dates[0];
+
+
+    if (value !== DDMMYYY_TH_FORMAT.format(selectDate)) {
+        setValue(DDMMYYY_TH_FORMAT.format(selectDate));
+    }
+
 
     return (
-        <Flex justify="space-between" {...group} bgColor="white" borderRadius={10} p={5} mt={2} gap={1} overflowX="auto" position="sticky" top={0} border="2px" borderColor="gray.100">
-            {days.map(day => {
-                const radio = getRadioProps({
-                    value: DDMMYYY_TH_FORMAT.format(day),
-                });
-                return (
-                    <RadioCard key={day.toString()} {...radio}>
-                        {dayOfWeekTHFormat.format(day)}
-                        <Text fontSize="xl" fontWeight="bold">
-                            {day.getDate()}
-                        </Text>
-                        {monthTHFormat.format(day)}
-                    </RadioCard>
-                );
-            })}
-        </Flex>
+        <Flex justify="space-between" {...group} bgColor="white" borderRadius={10} p={5} mt={2} gap={5} overflowX="auto" position="sticky" top={0} border="2px" borderColor="gray.100" >
+            {
+                dates.map(day => {
+                    const radio = getRadioProps({
+                        value: DDMMYYY_TH_FORMAT.format(day),
+                    });
+                    return (
+                        <RadioCard key={day.toString()} {...radio}>
+                            {dayOfWeekTHFormat.format(day)}
+                            <Text fontSize="xl" fontWeight="bold">
+                                {day.getDate()}
+                            </Text>
+                            {monthTHFormat.format(day)}
+                        </RadioCard>
+                    );
+                })
+            }
+        </Flex >
     );
 }

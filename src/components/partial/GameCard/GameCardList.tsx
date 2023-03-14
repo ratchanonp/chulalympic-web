@@ -1,17 +1,20 @@
+import { useAppSelector } from "@/hooks";
 import { useLazyGetGamesQuery } from "@/services/games";
-import { Stack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Icon, Stack, Text } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { SlMagnifier } from "react-icons/sl";
 import { GameCard } from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 
 export function GameCardList() {
-  const [trigger, { data: games, isLoading }] = useLazyGetGamesQuery();
+  const [trigger, { data: games, isLoading, error }] = useLazyGetGamesQuery();
 
-  const [filter, setFilter] = useState();
+  const filter = useAppSelector((state) => state.filter);
+  const { } = filter;
 
   useEffect(() => {
-    trigger();
-  }, [filter]);
+    trigger(filter);
+  }, [filter, trigger]);
 
   if (isLoading) {
     return (
@@ -23,8 +26,12 @@ export function GameCardList() {
     );
   }
 
-  if (!games) return <>ไม่พบ</>;
-
+  if (error || !games) return (
+    <Stack w="full" borderRadius={10} spacing={3} flex="auto" bgColor="white" py={4} alignItems="center" justifyContent="center">
+      <Icon as={SlMagnifier} w={20} h={20} color="gray.400" />
+      <Text textAlign="center" fontSize="2xl" fontFamily="athiti" fontWeight="medium" >ไม่พบผลการค้นหา</Text>
+    </Stack>
+  )
 
   return (
     <Stack w="full" borderRadius={10} spacing={3} flex="auto">

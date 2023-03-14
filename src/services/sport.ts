@@ -1,4 +1,4 @@
-import { SportResponse, SportsResponse } from "@/interfaces/sport.interface";
+import { SportCategoriesResponse, SportResponse, SportsResponse } from "@/interfaces/sport.interface";
 import { api } from "./api";
 
 export const sportApi = api.injectEndpoints({
@@ -9,7 +9,10 @@ export const sportApi = api.injectEndpoints({
         getSport: build.query<SportResponse, string>({
             query: (code) => `sports/${code}`,
         }),
+        getSportCategories: build.query<SportCategoriesResponse, string>({
+            query: (gameId: string) => ({ url: `sports/${gameId}/categories` }),
+        }),
     }),
 });
 
-export const { useLazyGetSportQuery, useLazyGetSportsQuery, useGetSportQuery, useGetSportsQuery } = sportApi;
+export const { useLazyGetSportQuery, useLazyGetSportsQuery, useGetSportQuery, useGetSportsQuery, useLazyGetSportCategoriesQuery } = sportApi;

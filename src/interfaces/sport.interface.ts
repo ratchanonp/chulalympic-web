@@ -8,8 +8,9 @@ export interface Sport {
 export interface SportCategory {
     code: string;
     name: string;
-    sportCode: "AH"
+    sportCode?: string;
 }
 
 export type SportsResponse = Sport[];
 export type SportResponse = Sport;
+export type SportCategoriesResponse = SportCategory[];

@@ -28,10 +28,6 @@ import animation from "@/lottie/Hero.json";
 function HomePage() {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const { date, sports, venues, faculty } = useAppSelector((state) => state.filter)
-
-
-
     return (
         <>
             <Stack justifyContent="stretch" alignItems="center" h="100vh">
