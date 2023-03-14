@@ -105,7 +105,10 @@ function HomePage() {
                                     <Icon as={MdSportsHandball} mr={1} />
                                     การแข่งขัน
                                 </Heading>
-                                <Button onClick={onOpen}>
+                                <Button onClick={onOpen} display={{
+                                    base: "flex",
+                                    lg: "none",
+                                }}>
                                     <Icon mr={2} w={5} h={5} as={BiFilterAlt} />
                                     <Text>Filter</Text>
                                 </Button>
