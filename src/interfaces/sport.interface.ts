@@ -14,3 +14,9 @@ export interface SportCategory {
 export type SportsResponse = Sport[];
 export type SportResponse = Sport;
 export type SportCategoriesResponse = SportCategory[];
+
+export interface CreateSportCategory {
+    code: string;
+    name: string;
+    sportCode: string;
+}

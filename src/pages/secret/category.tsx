@@ -1,5 +1,5 @@
 import Container from "@/components/common/Chakra/Container/Container"
-import { useGetSportsQuery } from "@/services/sport"
+import { useCreateCategoryMutation, useGetSportsQuery } from "@/services/sport"
 import { Button, FormControl, Heading, Input, Select, Stack, Text } from "@chakra-ui/react"
 import { useFormik } from "formik"
 
@@ -7,15 +7,16 @@ type Props = {}
 
 export default function AddCategory({ }: Props) {
 
+    const [createSportCategory] = useCreateCategoryMutation();
+
     const formik = useFormik({
         initialValues: {
             sportCode: "",
-            sportCategoryCode: "",
-            sportCategoryName: "",
+            code: "",
+            name: "",
         },
         onSubmit: async (values) => {
-            await new Promise((r) => setTimeout(r, 500));
-            alert(JSON.stringify(values, null, 2));
+            await createSportCategory(values);
         }
     })
 
@@ -37,11 +38,11 @@ export default function AddCategory({ }: Props) {
                     </FormControl>
                     <FormControl>
                         <Text>รหัสประเภทกีฬา</Text>
-                        <Input colorScheme="pink" id="sportCategoryCode" placeholder="รหัสประเภทกีฬา" onChange={formik.handleChange} type="text" required />
+                        <Input colorScheme="pink" id="code" placeholder="รหัสประเภทกีฬา" onChange={formik.handleChange} type="text" required />
                     </FormControl>
                     <FormControl>
                         <Text>ชื่อประเภทกีฬา</Text>
-                        <Input id="sportCategoryName" placeholder="ชื่อประเภทกีฬา" onChange={formik.handleChange} type="text" required />
+                        <Input id="name" placeholder="ชื่อประเภทกีฬา" onChange={formik.handleChange} type="text" required />
                     </FormControl>
 
                     <Button colorScheme="pink" type="submit" isLoading={formik.isSubmitting} loadingText="กำลังเพิ่ม">เพิ่ม</Button>
