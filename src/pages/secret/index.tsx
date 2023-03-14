@@ -1,5 +1,8 @@
 import Container from "@/components/common/Chakra/Container/Container";
+import { useAppDispatch } from "@/hooks";
+import { CreateGame, GameStatus } from "@/interfaces/game.interface";
 import { useGetFacultiesQuery } from "@/services/faculty";
+import { useCreateGameMutation } from "@/services/games";
 import { useGetSportsQuery, useLazyGetSportCategoriesQuery } from "@/services/sport";
 import { useGetVenuesQuery } from "@/services/venue";
 import { Button, Checkbox, FormControl, FormLabel, Grid, Heading, Input, Select, Stack } from "@chakra-ui/react";
@@ -8,6 +11,9 @@ import { useFormik } from "formik";
 type Props = {}
 
 export default function Form({ }: Props) {
+
+    const dispatch = useAppDispatch();
+    const [createGame] = useCreateGameMutation();
 
     const formik = useFormik({
         initialValues: {
@@ -19,8 +25,24 @@ export default function Form({ }: Props) {
             type: "",
         },
         onSubmit: async (values) => {
-            await new Promise((r) => setTimeout(r, 500));
-            alert(JSON.stringify(values, null, 2));
+            const { sport, sportCategory, venue, faculty, start, type } = values;
+
+            const data: CreateGame = {
+                venueId: Number(venue),
+                sportCode: sport,
+                sportCategoryCode: sportCategory,
+                start: new Date(start).toISOString(),
+                type,
+                participants: faculty.map(faculty => ({ facultyId: Number(faculty) })),
+                status: GameStatus.SCHEDULED,
+            }
+
+            try {
+                const res = await createGame(data).unwrap();
+                console.log(res);
+            } catch (error) {
+                console.log(error);
+            }
         },
     })
 

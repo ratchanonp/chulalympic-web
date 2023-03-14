@@ -1,5 +1,5 @@
 import { getGamesFilter } from "@/interfaces/filter.interface";
-import { GamesResponse } from "@/interfaces/game.interface";
+import { CreateGame, GamesResponse } from "@/interfaces/game.interface";
 import { api } from "./api";
 
 export const gamesApi = api.injectEndpoints({
@@ -18,7 +18,14 @@ export const gamesApi = api.injectEndpoints({
         getDates: build.query<string[], void>({
             query: () => "games/dates",
         }),
+        createGame: build.mutation<void, CreateGame>({
+            query: (game) => ({
+                url: "/games",
+                method: "POST",
+                body: game,
+            }),
+        }),
     })
 });
 
-export const { useLazyGetGamesQuery, useGetGamesQuery, useGetDatesQuery } = gamesApi;
+export const { useLazyGetGamesQuery, useGetGamesQuery, useGetDatesQuery, useCreateGameMutation } = gamesApi;

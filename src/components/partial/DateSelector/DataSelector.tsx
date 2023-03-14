@@ -14,9 +14,11 @@ export function DateSelector() {
 
     const radioGroup = useRadioGroup({
         name: "date",
-        defaultValue: DDMMYYY_TH_FORMAT.format(new Date()),
+        defaultValue: DDMMYYY_TH_FORMAT.format(selectDate),
         onChange: (value) => {
-            dispatch(setDate(new Date(value)));
+            const spilt = value.split("/");
+            const date = new Date(Number(spilt[2]) - 543, Number(spilt[1]) - 1, Number(spilt[0]));
+            dispatch(setDate(date));
         },
     });
 
@@ -36,7 +38,7 @@ export function DateSelector() {
 
 
     return (
-        <Flex justify="space-between" {...group} bgColor="white" borderRadius={10} p={5} mt={2} gap={5} overflowX="auto" position="sticky" top={0} border="2px" borderColor="gray.100" >
+        <Flex justify="start" {...group} bgColor="white" borderRadius={10} p={5} mt={2} gap={5} overflowX="auto" position="sticky" top={0} border="2px" borderColor="gray.100" >
             {
                 dates.map(day => {
                     const radio = getRadioProps({

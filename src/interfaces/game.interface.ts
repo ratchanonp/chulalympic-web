@@ -37,3 +37,18 @@ export enum GameStatus {
 };
 
 export type GamesResponse = Game[];
+
+
+export interface CreateGame {
+    venueId: number;
+    sportCode: string;
+    sportCategoryCode: string;
+    start: string;
+    status: GameStatus;
+    type: string;
+    participants: CreateParticipant[];
+}
+
+export interface CreateParticipant {
+    facultyId: number;
+}
