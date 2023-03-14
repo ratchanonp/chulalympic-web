@@ -192,7 +192,7 @@ function Status({ status }: { status: GameStatus }) {
             case GameStatus.COMPLETE:
                 return "เสร็จสิ้น";
             case GameStatus.SCORED:
-                return "เสร็จสิ้น";
+                return "ประกาศผล";
             default:
                 return "ยังไม่เริ่ม";
         }
