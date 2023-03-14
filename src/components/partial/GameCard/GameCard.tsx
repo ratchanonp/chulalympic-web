@@ -141,6 +141,7 @@ function GameCard(props: Props) {
                                     fontFamily="athiti"
                                     fontSize={{ base: "md", md: "2xl" }}
                                     fontWeight="bold"
+                                    noOfLines={1}
                                 >
                                     {venue.name}
                                 </Text>
