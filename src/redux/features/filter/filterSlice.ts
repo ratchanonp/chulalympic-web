@@ -3,8 +3,11 @@
 import { FilterState } from "@/interfaces/filter.interface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+const todayWithoutTime = new Date();
+todayWithoutTime.setHours(0, 0, 0, 0);
+
 const initialFilterState: FilterState = {
-    date: new Date(),
+    date: todayWithoutTime,
     sports: [],
     venues: [],
     faculty: [],

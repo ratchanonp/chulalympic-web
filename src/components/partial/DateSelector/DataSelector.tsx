@@ -28,7 +28,15 @@ export function DateSelector() {
 
     if (isLoading || error || !data) return <DateSelectorLoading />
 
-    const dates = data.map(date => new Date(date));
+    // map and parse from staind and remove hour, minute, second, millisecond 
+    const dates = data.map(dateString => {
+        new Date(dateString);
+        // rmove hour, minute, second, millisecond
+        const date = new Date(dateString);
+        date.setHours(0, 0, 0, 0);
+        return date;
+    })
+
     selectDate = dates.find(date => date >= selectDate) || dates.find(date => date <= selectDate) || dates[0];
 
 
