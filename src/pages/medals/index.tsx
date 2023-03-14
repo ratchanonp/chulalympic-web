@@ -53,7 +53,7 @@ export default function MedalsPage() {
     return (
         <>
             <Head>
-                <title>Chula Olympic 2023 | สรุปเหรียญ    </title>
+                <title>Chulalympic 2023 | สรุปเหรียญ    </title>
             </Head>
             <Navbar />
             <Container>

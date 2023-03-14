@@ -15,7 +15,7 @@ export default function SportPage() {
     return (
         <div>
             <Head>
-                <title>Chula Olympic 2023 | กีฬา</title>
+                <title>Chulalympic 2023 | กีฬา</title>
             </Head>
             <Navbar />
             <Container maxW="container.xl" mb={10}>

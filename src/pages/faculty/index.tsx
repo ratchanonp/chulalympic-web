@@ -23,7 +23,7 @@ function FacultyPage() {
     return (
         <>
             <Head>
-                <title>Chula Olympic 2023 | คณะ/สถาบัน</title>
+                <title>Chulalympic 2023 | คณะ/สถาบัน</title>
             </Head>
             <Navbar />
             <Container>

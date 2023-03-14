@@ -31,7 +31,7 @@ function HomePage() {
     return (
         <>
             <Head>
-                <title>Chula Olympic 2023</title>
+                <title>Chulalympic 2023</title>
             </Head>
             <Stack justifyContent="stretch" alignItems="center" h="100vh">
                 <Navbar />

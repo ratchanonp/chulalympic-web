@@ -15,7 +15,7 @@ export default function SportById() {
     return (
         <>
             <Head>
-                <title>Chula Olympic 2023 | กีฬา</title>
+                <title>Chulalympic 2023 | กีฬา</title>
             </Head>
             <Navbar />
             <SportHeader />

@@ -1,4 +1,5 @@
 import { useAppSelector } from "@/hooks";
+import { GameStatus } from "@/interfaces/game.interface";
 import { useLazyGetGamesQuery } from "@/services/games";
 import { Icon, Stack, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
@@ -33,9 +34,24 @@ export function GameCardList() {
     </Stack>
   )
 
+  // sort from status "scored" to "not scored" and start time
+  const sorted = [...games].sort((a, b) => {
+    const aStatus = a.status;
+    const bStatus = b.status;
+
+    if (aStatus === GameStatus.SCORED && bStatus !== GameStatus.SCORED) {
+      return -1;
+    } else if (aStatus !== GameStatus.SCORED && bStatus === GameStatus.SCORED) {
+      return 1;
+    } else {
+      return new Date(a.start).getTime() - new Date(b.start).getTime();
+    }
+  }
+  );
+
   return (
     <Stack w="full" borderRadius={10} spacing={3} flex="auto">
-      {games.map((game, i) => (
+      {sorted.map((game, i) => (
         <GameCard key={i} gameData={game} />
       ))}
     </Stack>
