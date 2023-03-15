@@ -39,7 +39,6 @@ export default function Form({ }: Props) {
 
             try {
                 const res = await createGame(data).unwrap();
-                console.log(res);
             } catch (error) {
                 console.log(error);
             }

@@ -43,7 +43,6 @@ function GameCard(props: Props) {
 
     const { participant, sport, sportCategory, start, venue, status, id } = gameData;
 
-    console.log(gameData)
 
     return (
         <Accordion allowMultiple>

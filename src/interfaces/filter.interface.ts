@@ -11,3 +11,8 @@ export interface getGamesFilter {
     venues?: string[];
     faculty?: string[];
 }
+
+export interface SetValue {
+    name: string;
+    value: string | string[] | Date | null | number | number[];
+}

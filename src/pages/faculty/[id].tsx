@@ -51,7 +51,7 @@ function FacultyHeader() {
                 <Icon fontSize="2xl" as={ChevronLeftIcon} mr={1} /> ย้อนกลับ
             </Button>
             <Skeleton isLoaded={!isLoading} width="fit-content">
-                <Heading as="h1" size="4xl" mt={10} display="flex" alignItems="center">{data?.name}</Heading>
+                <Heading as="h1" size={["2xl", "4xl"]} mt={10} display="flex" alignItems="center">{data?.name}</Heading>
             </Skeleton>
         </Container>
     </Flex >);

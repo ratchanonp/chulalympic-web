@@ -1,11 +1,10 @@
 // redux filter
 
-import { FilterState } from "@/interfaces/filter.interface";
+import { FilterState, SetValue } from "@/interfaces/filter.interface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// Set time to 00:00:00:000 timezone to UTC
-const todayWithoutTime = new Date();
-todayWithoutTime.setUTCHours(0, 0, 0, 0);
+// new UTC date without time
+const todayWithoutTime = new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()));
 
 const initialFilterState: FilterState = {
     date: todayWithoutTime,
@@ -30,6 +29,26 @@ export const filterSlice = createSlice({
         setFaculty: (state, action: PayloadAction<string>) => {
             state.faculty = addOrRemove(state.faculty, action.payload);
         },
+        setValue: (state, action: PayloadAction<SetValue>) => {
+            const { name, value } = action.payload;
+
+            switch (name) {
+                case 'date':
+                    state.date = value as Date;
+                    break;
+                case 'sports':
+                    state.sports = value as string[];
+                    break;
+                case 'venues':
+                    state.venues = value as string[];
+                    break;
+                case 'faculty':
+                    state.faculty = value as string[];
+                    break;
+                default:
+                    break;
+            }
+        },
         setDefault: (state, action: PayloadAction<Omit<FilterState, "date">>) => {
             state.sports = action.payload.sports;
             state.venues = action.payload.venues;
@@ -45,5 +64,5 @@ function addOrRemove<T>(array: T[], value: T): T[] {
     }
 }
 
-export const { setDate, setSports, setVenues, setFaculty, setDefault } = filterSlice.actions;
+export const { setDate, setSports, setVenues, setFaculty, setDefault, setValue } = filterSlice.actions;
 export default filterSlice.reducer;

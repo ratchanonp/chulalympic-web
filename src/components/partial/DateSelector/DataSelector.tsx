@@ -22,7 +22,6 @@ export function DateSelector() {
             const date = new Date(Date.UTC(+(spilt[2]) - 543, +(spilt[1]) - 1, +(spilt[0])));
             date.setUTCHours(0, 0, 0, 0);
 
-            console.log(date.toISOString())
 
             dispatch(setDate(date));
         },
