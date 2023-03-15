@@ -1,4 +1,5 @@
 import { Game, GameStatus, Participant } from "@/interfaces/game.interface";
+import { SportCategory } from "@/interfaces/sport.interface";
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Badge, Box, Flex, HStack, Icon, Stack, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue, VStack } from "@chakra-ui/react";
 import { AiFillClockCircle, AiFillEnvironment, AiFillInfoCircle } from "react-icons/ai/";
 import GameCardSkeleton from "./GameCardSkeleton";
@@ -57,95 +58,98 @@ function GameCard(props: Props) {
                 borderColor="gray.100"
                 bg="white"
             >
-                <AccordionButton w="100%" _hover={{}}>
-                    <VStack w="100%" justifyContent="start" alignItems="start">
+                {({ isExpanded }) => (
+                    <>
+                        <AccordionButton w="100%" _hover={{}}>
+                            <VStack w="100%" justifyContent="start" alignItems="start">
 
-                        <Flex w="full">
-                            <Status status={status} />
-                            <Text ml={2} display="flex" alignItems="center" justifyContent="center" fontFamily="athiti" fontSize={{
-                                base: "xs",
-                                md: "md",
-                            }}> <Icon as={AiFillEnvironment} mr={1} /> {venue.name} </Text>
+                                <Flex w="full">
+                                    <Status status={status} />
+                                    <Text ml={2} display="flex" alignItems="center" justifyContent="center" fontFamily="athiti" fontSize={{
+                                        base: "xs",
+                                        md: "md",
+                                    }}> <Icon as={AiFillEnvironment} mr={1} /> {venue.name} </Text>
 
 
-                        </Flex>
-                        <HStack
-                            w="100%"
-                            display="flex"
-                            spacing={{
-                                base: 0,
-                                md: 16,
-                            }}
-                            alignItems="start"
-                        >
-                            <Flex
-                                flex={1}
-                                textAlign="left"
-                                w="full"
-                                justifyContent="start"
-                                alignItems="end"
-                            >
-                                {status == GameStatus.SCHEDULED && (<VStack spacing={0} alignItems="left" mr={5} display={["none", "block"]}>
-                                    <Text
-                                        textColor="gray.400"
-                                        fontSize="sm"
-                                        fontFamily="athiti"
-                                        fontWeight="500"
+                                </Flex>
+                                <HStack
+                                    w="100%"
+                                    display="flex"
+                                    spacing={{
+                                        base: 0,
+                                        md: 16,
+                                    }}
+                                    alignItems="start"
+                                >
+                                    <Flex
+                                        flex={1}
+                                        textAlign="left"
+                                        w="full"
+                                        justifyContent="start"
+                                        alignItems="end"
+                                    >
+                                        {status == GameStatus.SCHEDULED && (<VStack spacing={0} alignItems="left" mr={5} display={["none", "block"]}>
+                                            <Text
+                                                textColor="gray.400"
+                                                fontSize="sm"
+                                                fontFamily="athiti"
+                                                fontWeight="500"
 
-                                    >
-                                        เวลา
-                                    </Text>
-                                    <Text
-                                        fontFamily="athiti"
-                                        fontSize={{ base: "md", md: "2xl" }}
-                                        fontWeight="bold"
-                                        w="auto"
-                                        noOfLines={1}
-                                    >
-                                        <Badge
-                                            fontFamily="athiti"
-                                            colorScheme="pink"
-                                            textColor="pink.400"
-                                            fontSize={{ base: "md", md: "2xl" }}
-                                            fontWeight="bold"
-                                        >
-                                            {getTime(start)}
-                                        </Badge>
-                                    </Text>
-                                </VStack>)}
-                                <VStack spacing={0} alignItems="left" w={["40%", "20%"]}>
-                                    <Text
-                                        textColor="gray.400"
-                                        fontSize="sm"
-                                        fontFamily="athiti"
-                                        fontWeight="500"
-                                    >
-                                        กีฬา
-                                    </Text>
-                                    <Text
-                                        fontFamily="athiti"
-                                        fontSize={{ base: "md", md: "2xl" }}
-                                        fontWeight="bold"
-                                        w="auto"
-                                        noOfLines={1}
-                                    >
-                                        {sport.name}
-                                    </Text>
-                                </VStack>
-                                {
-                                    participant.length == 2 && (<VSScore participants={participant} start={start} status={status} />)
-                                }
-                            </Flex>
-                        </HStack>
-                        <Text fontSize="sm" fontFamily="athiti" color="gray.300">{id}</Text>
-                    </VStack>
-                    {participant.length > 2 && (<Flex ml="auto" pl={2}>
-                        <AccordionIcon />
-                    </Flex>)}
-                </AccordionButton>
-                <AccordionPanel>
-                    <ParticipantTable participant={participant} status={status} />
-                </AccordionPanel>
+                                            >
+                                                เวลา
+                                            </Text>
+                                            <Text
+                                                fontFamily="athiti"
+                                                fontSize={{ base: "md", md: "2xl" }}
+                                                fontWeight="bold"
+                                                w="auto"
+                                                noOfLines={1}
+                                            >
+                                                <Badge
+                                                    fontFamily="athiti"
+                                                    colorScheme="pink"
+                                                    textColor="pink.400"
+                                                    fontSize={{ base: "md", md: "2xl" }}
+                                                    fontWeight="bold"
+                                                >
+                                                    {getTime(start)}
+                                                </Badge>
+                                            </Text>
+                                        </VStack>)}
+                                        <VStack spacing={0} alignItems="left" w={["40%", (participant.length != 2 || isExpanded ? "40%" : "20%")]}>
+                                            <Text
+                                                textColor="gray.400"
+                                                fontSize="sm"
+                                                fontFamily="athiti"
+                                                fontWeight="500"
+                                            >
+                                                กีฬา
+                                            </Text>
+                                            <Text
+                                                fontFamily="athiti"
+                                                fontSize={{ base: "md", md: "2xl" }}
+                                                fontWeight="bold"
+                                                w="auto"
+                                                noOfLines={1}
+                                            >
+                                                {sport.name}
+                                            </Text>
+                                        </VStack>
+                                        {participant.length == 2 && !isExpanded && (<VSScore participants={participant} start={start} status={status} />)}
+                                        {participant.length == 2 && isExpanded && (<MoreDetail start={start} sportCategory={sportCategory} />)}
+                                        {participant.length != 2 && (<MoreDetail start={start} sportCategory={sportCategory} />)}
+                                    </Flex>
+                                </HStack>
+                                <Text fontSize="sm" fontFamily="athiti" color="gray.300">{id}</Text>
+                            </VStack>
+                            {participant.length > 2 && (<Flex ml="auto" pl={2}>
+                                <AccordionIcon />
+                            </Flex>)}
+                        </AccordionButton>
+                        <AccordionPanel>
+                            <ParticipantTable participant={participant} status={status} />
+                        </AccordionPanel>
+                    </>)}
             </AccordionItem>
         </Accordion >
     );
@@ -311,4 +315,26 @@ function ParticipantTable({ participant, status }: { participant: Participant[],
             </Table>
         </TableContainer>
     )
+}
+
+function MoreDetail({ start, sportCategory }: { start: Date, sportCategory: SportCategory }) {
+    return (<Stack direction="row" alignItems="center" justifyContent="space-between" w="full" ml={2}>
+        <VStack spacing={0} alignItems="left">
+            <Text textColor="gray.400" fontSize="sm" fontFamily="athiti" fontWeight="500">
+                ประเภท
+            </Text>
+            <Text fontFamily="athiti" fontSize={{
+                base: "md",
+                md: "2xl"
+            }} fontWeight="bold" w="auto" noOfLines={1}>
+                {sportCategory.name}
+            </Text>
+        </VStack>
+        <Badge ml={2} fontFamily="athiti" colorScheme="pink" textColor="pink.400" fontSize={{
+            base: "md",
+            md: "2xl"
+        }} fontWeight="bold" display={["flex", "none"]}>
+            {getTime(start)}
+        </Badge>
+    </Stack>);
 }
