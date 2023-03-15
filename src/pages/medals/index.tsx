@@ -22,24 +22,24 @@ export default function MedalsPage() {
             Cell: ({ value }) => {
                 const facultyId = data?.find((faculty) => faculty.name === value)?.id;
                 return (
-                    <Link as={NextLink} href={`/faculty/${facultyId}`} fontSize="xl" color="pink.400" fontWeight="medium"> {value} </Link>
+                    <Link as={NextLink} href={`/faculty/${facultyId}`} fontSize={["sm", "md"]} color="pink.400" fontWeight="medium"> {value} </Link>
                 )
             }
         },
         {
             Header: "ทอง",
             accessor: "gold",
-            Cell: ({ value }) => (<Text display="flex" justifyContent="center" alignItems="center" w={10} h={10} bgColor="gold" borderRadius="full">{value}</Text>)
+            Cell: ({ value }) => (<Text display="flex" justifyContent="center" alignItems="center" w={[5, 10]} h={[5, 10]} bgColor="gold" borderRadius="full">{value}</Text>)
         },
         {
             Header: "เงิน",
             accessor: "silver",
-            Cell: ({ value }) => (<Text display="flex" justifyContent="center" alignItems="center" w={10} h={10} bgColor="silver" borderRadius="full">{value}</Text>)
+            Cell: ({ value }) => (<Text display="flex" justifyContent="center" alignItems="center" w={[5, 10]} h={[5, 10]} bgColor="silver" borderRadius="full">{value}</Text>)
         },
         {
             Header: "ทองแดง",
             accessor: "bronze",
-            Cell: ({ value }) => (<Text display="flex" justifyContent="center" alignItems="center" w={10} h={10} bgColor="bronze" borderRadius="full">{value}</Text>)
+            Cell: ({ value }) => (<Text display="flex" justifyContent="center" alignItems="center" w={[5, 10]} h={[5, 10]} bgColor="bronze" borderRadius="full">{value}</Text>)
         },
         {
             Header: "รวม",

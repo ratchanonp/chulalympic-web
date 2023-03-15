@@ -30,7 +30,7 @@ export default function DataTable({
                         <Tr {...headerGroup.getHeaderGroupProps()}>
                             {
                                 headerGroup.headers.map((column: any) => (
-                                    <Th fontSize="lg" {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                    <Th p={[1, 5]} fontSize={["xs", "md", "xl"]} {...column.getHeaderProps(column.getSortByToggleProps())}>
                                         {column.render('Header')}
                                         <span>
                                             {column.isSorted
@@ -54,10 +54,10 @@ export default function DataTable({
                     rows.map((row) => {
                         prepareRow(row)
                         return (
-                            <Tr {...row.getRowProps()}>
+                            <Tr fontSize={["sm", "lg"]} {...row.getRowProps()}>
                                 {
                                     row.cells.map((cell) => (
-                                        <Td {...cell.getCellProps()}>
+                                        <Td px={[1, 5]} {...cell.getCellProps()}>
                                             {cell.render('Cell')}
                                         </Td>
                                     ))
