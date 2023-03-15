@@ -13,6 +13,7 @@ import {
     Flex,
     Heading,
     Icon,
+    Link,
     Stack,
     Text,
     useDisclosure
@@ -24,6 +25,7 @@ import { MdSportsHandball } from "react-icons/md";
 import { GameCardList } from "@/components/partial/GameCard/GameCardList";
 import animation from "@/lottie/Hero.json";
 import Head from "next/head";
+import { AiFillHeart } from "react-icons/ai";
 
 function HomePage() {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -127,7 +129,12 @@ function HomePage() {
                             <GameCardList />
                         </Flex>
                     </Stack>
+
                 </Container>
+
+            </Flex>
+            <Flex fontFamily="athiti" textAlign="center" alignItems="center" fontSize="xs" textColor="gray.400" justifyContent="center" bgColor="white" py={2}>
+                <Text>Made with <Icon as={AiFillHeart} /> by&nbsp;<Link href="https://github.com/ratchanonp">Q</Link> Associate with&nbsp;<Link href="https://www.instagram.com/sports.sgcu/">Sports SGCU</Link></Text>
             </Flex>
 
             <Drawer placement="bottom" size="full" isOpen={isOpen} onClose={onClose}>
