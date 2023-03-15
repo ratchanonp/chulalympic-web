@@ -180,7 +180,7 @@ function SportGames() {
 
                 console.log(date)
                 const spiltDate = date.split('/')
-                const format = new Date(+spiltDate[2] - 1, +spiltDate[1], +spiltDate[0])
+                const format = new Date(+spiltDate[2] - 1, +spiltDate[1] - 1, +spiltDate[0])
                 console.log(format)
 
                 return (
