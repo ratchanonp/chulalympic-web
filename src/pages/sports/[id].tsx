@@ -176,25 +176,30 @@ function SportGames() {
 
     return (
         <Stack w="full" borderRadius={10} spacing={3} flex="auto">
-            {Object.entries(gamesByDate).map(([date, games]) => (
-                <Stack key={date} w="full" borderRadius={10} spacing={3} flex="auto" bgColor="white" mt={4}>
-                    <Heading size="md" color="gray.400" fontWeight="medium" alignItems="center" display="flex">
-                        <Icon mr={2} as={IoCalendar} />
-                        {
-                            new Date(date).toLocaleDateString('th-TH', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                            })
-                        }
-                    </Heading>
-                    <Stack w="full" borderRadius={10} spacing={3} flex="auto">
-                        {games.map((game, i) => (
-                            <GameCard key={i} gameData={game} />
-                        ))}
-                    </Stack>
-                </Stack>
-            ))}
+            {Object.entries(gamesByDate).map(([date, games]) => {
+
+                console.log(date)
+
+                return (
+                    <Stack key={date} w="full" borderRadius={10} spacing={3} flex="auto" bgColor="white" mt={4}>
+                        <Heading size="md" color="gray.400" fontWeight="medium" alignItems="center" display="flex">
+                            <Icon mr={2} as={IoCalendar} />
+                            {
+
+                                new Date(date).toLocaleDateString('th-TH', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                })
+                            }
+                        </Heading>
+                        <Stack w="full" borderRadius={10} spacing={3} flex="auto">
+                            {games.map((game, i) => (
+                                <GameCard key={i} gameData={game} />
+                            ))}
+                        </Stack>
+                    </Stack>)
+            })}
         </Stack>
     );
 }
