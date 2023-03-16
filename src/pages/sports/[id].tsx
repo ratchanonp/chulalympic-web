@@ -178,8 +178,8 @@ function SportGames() {
         <Stack w="full" borderRadius={10} spacing={3} flex="auto">
             {Object.entries(gamesByDate).map(([date, games]) => {
 
-                const spiltDate = date.split('/')
-                const format = new Date(+spiltDate[2] - 1, +spiltDate[1] - 1, +spiltDate[0])
+                const spiltDate = date.split('/') // 0 = month, 1 = day, 2 = year
+                const format = new Date(`${spiltDate[2]}-${spiltDate[0]}-${spiltDate[1]}`)
 
                 return (
                     <Stack key={date} w="full" borderRadius={10} spacing={3} flex="auto" bgColor="white" mt={4}>
