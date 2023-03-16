@@ -35,10 +35,10 @@ function HomePage() {
             <Head>
                 <title>Chulalympic 2023</title>
             </Head>
-            <Stack justifyContent="stretch" alignItems="center" h="100vh">
+            <Stack justifyContent="stretch" alignItems="center">
                 <Navbar />
                 <Container maxW="container.xl">
-                    <Stack as="section" id="hero" mt={100} spacing="" alignItems="center">
+                    <Stack as="section" id="hero" mt={100} spacing="" alignItems="center" pb={20}>
                         <Lottie
                             animationData={animation}
                             style={{
@@ -102,7 +102,7 @@ function HomePage() {
                                     alignItems="center"
                                     fontFamily="athiti"
                                     variant="h2"
-                                    fontWeight="normal"
+                                    fontWeight="medium"
                                 >
                                     <Icon as={MdSportsHandball} mr={1} />
                                     การแข่งขัน

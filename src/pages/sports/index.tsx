@@ -38,10 +38,10 @@ export default function SportPage() {
                                 </span>
                                 <Link opacity={0} _groupHover={{ opacity: 1 }} color="pink.400" ml={1} href={`#${char}`}>#</Link>
                             </Heading>
-                            <UnorderedList mt={5}>
+                            <UnorderedList>
                                 {filterByInitialLetter(char, data).map((sport, idx) => (
                                     <UnorderedList key={idx}>
-                                        <ListItem fontFamily="athiti" fontWeight="light">
+                                        <ListItem fontFamily="athiti" fontWeight="light" fontSize="lg">
                                             <Link href={`/sports/${sport.code}`}>{sport.name}</Link>
                                         </ListItem>
                                     </UnorderedList>

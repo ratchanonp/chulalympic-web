@@ -21,7 +21,7 @@ export default function SportById() {
             <SportHeader />
             <Container maxW="container.xl" py={5}>
                 <Heading>การแข่งขัน</Heading>
-                <Stack gap={10} mt={10}>
+                <Stack gap={10} >
                     <SportGames />
                 </Stack>
             </Container>
