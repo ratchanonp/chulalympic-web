@@ -334,7 +334,7 @@ function ParticipantTable({ participant, status }: { participant: Participant[],
                         <Tr key={i}>
                             <Td>{status == GameStatus.SCORED ? i + 1 : "-"}</Td>
                             <Td>{p.faculty.name}</Td>
-                            <Td isNumeric>{status == GameStatus.SCORED ? p.value : "-"}</Td>
+                            {participant[0]?.scoreType !== "POSITION" && (<Td isNumeric>{status == GameStatus.SCORED ? p.value : "-"}</Td>)}
                             <Td>{p.medal ? medalLabel(p.medal) : "-"}</Td>
                         </Tr>
                     ))}
