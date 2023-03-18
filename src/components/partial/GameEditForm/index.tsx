@@ -34,6 +34,8 @@ export default function GameEditForm(props: Props) {
     const dateTime = new Date(data.start);
     dateTime.setHours(dateTime.getHours() + 7);
 
+    const sortedParticipant = [...data.participant].sort((a, b) => a.value - b.value * (data.participant[0]?.scoreType == "POINT" ? -1 : 1));
+
     const initialValues = {
         id: data.id,
         venueId: data.venue.id,
@@ -42,8 +44,7 @@ export default function GameEditForm(props: Props) {
         start: dateTime.toISOString().slice(0, 16),
         type: data.type,
         status: data.status,
-        participant: data.participant
-            .sort((a, b) => a.value - b.value * (data.participant[0]?.scoreType == "POINT" ? -1 : 1))
+        participant: sortedParticipant
             .map(participant => ({
                 id: participant.id,
                 facultyId: participant.facultyId,
