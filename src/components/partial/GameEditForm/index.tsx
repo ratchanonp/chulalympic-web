@@ -82,13 +82,15 @@ export default function GameEditForm(props: Props) {
                     start: new Date(values.start).toISOString(),
                     type: values.type,
                     status: values.status,
-                    participants: values.participant.map(participant => ({
-                        id: participant.id,
-                        facultyId: Number(participant.facultyId),
-                        scoreType: values.scoreType,
-                        value: Number(participant.value),
-                        medal: participant.medal ? participant.medal : null
-                    })),
+                    participants: values.participant
+                        .sort((a, b) => a.value - b.value * (values.scoreType == "POINT" ? -1 : 1))
+                        .map(participant => ({
+                            id: participant.id,
+                            facultyId: Number(participant.facultyId),
+                            scoreType: values.scoreType,
+                            value: Number(participant.value),
+                            medal: participant.medal ? participant.medal : null
+                        })),
                 }
 
                 await handleSubmit(data);
@@ -152,7 +154,6 @@ export default function GameEditForm(props: Props) {
                                     </Stack>
                                     <Stack spacing={5}>
                                         {values.participant
-                                            .sort((a, b) => a.value - b.value * (values.scoreType == "POINT" ? -1 : 1))
                                             .map((participant, index) => (
                                                 <>
                                                     <Stack spacing={2} direction={["column", "row"]} alignItems="end" key={index} bgColor="gray.50" p={5} borderRadius="xl">
