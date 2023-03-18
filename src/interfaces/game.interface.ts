@@ -24,7 +24,7 @@ export interface Participant {
     facultyId: number;
     scoreType: string;
     value: number;
-    medal?: any;
+    medal?: string;
     gameId: string;
     faculty: Faculty;
 }

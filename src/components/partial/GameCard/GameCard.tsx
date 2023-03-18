@@ -1,5 +1,6 @@
 import { Game, GameStatus, Participant } from "@/interfaces/game.interface";
 import { SportCategory } from "@/interfaces/sport.interface";
+import { medalLabel } from "@/utils/medalformat";
 import formatTimeAgo from "@/utils/timeformat";
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Badge, Box, Flex, HStack, Icon, Stack, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue, VStack } from "@chakra-ui/react";
 import { AiFillClockCircle, AiFillEnvironment, AiFillInfoCircle } from "react-icons/ai/";
@@ -299,15 +300,34 @@ function getTime(date: Date) {
 function ParticipantTable({ participant, status }: { participant: Participant[], status: GameStatus }) {
 
     // sort by score high to low
-    const sorted = [...participant].sort((a, b) => b.value - a.value);
+    let sorted, scoreTypeLabel;
+    if (participant[0].scoreType == "POINT") sorted = [...participant].sort((a, b) => b.value - a.value);
+    else sorted = [...participant].sort((a, b) => a.value - b.value);
+
+    switch (participant[0].scoreType) {
+        case "POINT":
+            scoreTypeLabel = "คะแนน";
+            break;
+        case "TIME":
+            scoreTypeLabel = "เวลา";
+            break;
+        case "POSITION":
+            scoreTypeLabel = "อันดับ";
+            break;
+        default:
+            scoreTypeLabel = "คะแนน";
+            break;
+    }
+
 
     return (
         <TableContainer>
             <Table size="sm" variant='striped' fontFamily="athiti">
                 <Thead>
                     <Th>อันดับ</Th>
-                    <Th>คณะ</Th>
+                    <Th>{scoreTypeLabel}</Th>
                     <Th isNumeric>คะแนน</Th>
+                    <Th>เหรียญ</Th>
                 </Thead>
                 <Tbody>
                     {sorted.map((p, i) => (
@@ -315,6 +335,7 @@ function ParticipantTable({ participant, status }: { participant: Participant[],
                             <Td>{status == GameStatus.SCORED ? i + 1 : "-"}</Td>
                             <Td>{p.faculty.name}</Td>
                             <Td isNumeric>{status == GameStatus.SCORED ? p.value : "-"}</Td>
+                            <Td>{p.medal ? medalLabel(p.medal) : "-"}</Td>
                         </Tr>
                     ))}
                 </Tbody>

@@ -48,7 +48,7 @@ export const gameData: Game = {
             facultyId: 1,
             scoreType: "POINT",
             value: 0,
-            medal: null,
+            medal: undefined,
             gameId: "AH-INDI-0001",
             faculty: {
                 id: 1,
@@ -59,7 +59,7 @@ export const gameData: Game = {
             facultyId: 2,
             scoreType: "POINT",
             value: 0,
-            medal: null,
+            medal: undefined,
             gameId: "AH-INDI-0001",
             faculty: {
                 id: 2,
@@ -70,7 +70,7 @@ export const gameData: Game = {
             facultyId: 3,
             scoreType: "POINT",
             value: 0,
-            medal: null,
+            medal: undefined,
             gameId: "AH-INDI-0001",
             faculty: {
                 id: 3,
