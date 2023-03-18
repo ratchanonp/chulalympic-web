@@ -151,64 +151,66 @@ export default function GameEditForm(props: Props) {
 
                                     </Stack>
                                     <Stack spacing={5}>
-                                        {values.participant.map((participant, index) => (
-                                            <>
-                                                <Stack spacing={2} direction={["column", "row"]} alignItems="end" key={index} bgColor="gray.50" p={5} borderRadius="xl">
-                                                    <FormControl>
-                                                        <FormLabel fontWeight="semibold" display="flex" alignItems="center">
-                                                            <Icon as={HiLibrary} mr={1} />
-                                                            คณะ</FormLabel>
-                                                        <Select bgColor="white"
-                                                            id={`participant.${index}.facultyId`}
-                                                            onChange={handleChange}
+                                        {values.participant
+                                            .sort((a, b) => a.value - b.value * (values.scoreType == "POINT" ? -1 : 1))
+                                            .map((participant, index) => (
+                                                <>
+                                                    <Stack spacing={2} direction={["column", "row"]} alignItems="end" key={index} bgColor="gray.50" p={5} borderRadius="xl">
+                                                        <FormControl>
+                                                            <FormLabel fontWeight="semibold" display="flex" alignItems="center">
+                                                                <Icon as={HiLibrary} mr={1} />
+                                                                คณะ</FormLabel>
+                                                            <Select bgColor="white"
+                                                                id={`participant.${index}.facultyId`}
+                                                                onChange={handleChange}
+                                                            >
+                                                                <option value="" selected={participant.facultyId === undefined}>เลือกคณะ</option>
+                                                                {Faculties.map(faculty => (
+                                                                    <option
+                                                                        key={faculty.id}
+                                                                        value={faculty.id}
+                                                                        selected={faculty.id === participant.facultyId}
+                                                                    >{faculty.name}</option>
+                                                                ))}
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormControl>
+                                                            <FormLabel fontWeight="semibold" display="flex" alignItems="center"><Icon as={MdOutlineScore} mr={1} />{SCORE_TYPE.find(scoreType => scoreType.value === values.scoreType)?.label}</FormLabel>
+                                                            <Input bgColor="white"
+                                                                id={`participant.${index}.value`}
+                                                                type={values.scoreType === "time" ? "time" : "number"}
+                                                                value={participant.value}
+                                                                onChange={handleChange}
+                                                            />
+                                                        </FormControl>
+                                                        <FormControl>
+                                                            <FormLabel fontWeight="semibold" display="flex" alignItems="center">
+                                                                <Icon as={BiMedal} mr={1} />
+                                                                เหรียญ
+                                                            </FormLabel>
+                                                            <Select bgColor="white"
+                                                                id={`participant.${index}.medal`}
+                                                                onChange={handleChange}
+                                                            >
+                                                                {MEDAL_TYPE.map(medal => (
+                                                                    <option
+                                                                        key={medal.value}
+                                                                        value={medal.value}
+                                                                        selected={medal.value === participant.medal}
+                                                                    >{medal.label}</option>
+                                                                ))}
+                                                            </Select>
+                                                        </FormControl>
+                                                        <Button
+                                                            colorScheme="red"
+                                                            onClick={() => remove(index)}
                                                         >
-                                                            <option value="" selected={participant.facultyId === undefined}>เลือกคณะ</option>
-                                                            {Faculties.map(faculty => (
-                                                                <option
-                                                                    key={faculty.id}
-                                                                    value={faculty.id}
-                                                                    selected={faculty.id === participant.facultyId}
-                                                                >{faculty.name}</option>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
-                                                    <FormControl>
-                                                        <FormLabel fontWeight="semibold" display="flex" alignItems="center"><Icon as={MdOutlineScore} mr={1} />{SCORE_TYPE.find(scoreType => scoreType.value === values.scoreType)?.label}</FormLabel>
-                                                        <Input bgColor="white"
-                                                            id={`participant.${index}.value`}
-                                                            type={values.scoreType === "time" ? "time" : "number"}
-                                                            value={participant.value}
-                                                            onChange={handleChange}
-                                                        />
-                                                    </FormControl>
-                                                    <FormControl>
-                                                        <FormLabel fontWeight="semibold" display="flex" alignItems="center">
-                                                            <Icon as={BiMedal} mr={1} />
-                                                            เหรียญ
-                                                        </FormLabel>
-                                                        <Select bgColor="white"
-                                                            id={`participant.${index}.medal`}
-                                                            onChange={handleChange}
-                                                        >
-                                                            {MEDAL_TYPE.map(medal => (
-                                                                <option
-                                                                    key={medal.value}
-                                                                    value={medal.value}
-                                                                    selected={medal.value === participant.medal}
-                                                                >{medal.label}</option>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
-                                                    <Button
-                                                        colorScheme="red"
-                                                        onClick={() => remove(index)}
-                                                    >
-                                                        <Icon w={5} h={5} as={MdDeleteForever} />
-                                                    </Button>
-                                                </Stack>
+                                                            <Icon w={5} h={5} as={MdDeleteForever} />
+                                                        </Button>
+                                                    </Stack>
 
-                                            </>
-                                        ))}
+                                                </>
+                                            ))}
                                         <Button size="sm" colorScheme="blue" onClick={() => push({ facultyId: "", scoreType: "", value: "", medal: "" })}>
                                             <Icon as={BiAddToQueue} mr={1} />
                                             เพิ่ม
