@@ -14,9 +14,16 @@ const SCORE_TYPE = [
 
 const MEDAL_TYPE = [
     { value: "", label: "ไม่มี" },
-    { value: "GOLD", label: "ทอง" },
-    { value: "SILVER", label: "เงิน" },
-    { value: "BRONZE", label: "ทองแดง" },
+    { value: "Gold", label: "ทอง" },
+    { value: "Silver", label: "เงิน" },
+    { value: "Bronze", label: "ทองแดง" },
+]
+
+const GAME_STATUS = [
+    { value: "SCHEDULED", label: "กำหนดเวลา" },
+    { value: "IN_PROGRESS", label: "กำลังแข่ง" },
+    { value: "COMPLETE", label: "เสร็จสิ้น" },
+    { value: "SCORED", label: "ประกาศผล" },
 ]
 
 export {

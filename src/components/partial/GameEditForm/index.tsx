@@ -38,6 +38,7 @@ export default function GameEditForm(props: Props) {
         sportCategoryCode: data.sportCategory.code,
         start: dateTime.toISOString().slice(0, 16),
         type: data.type,
+        status: data.status,
         participant: data.participant.map(participant => ({
             facultyId: participant.facultyId,
             scoreType: participant.scoreType,
@@ -75,6 +76,7 @@ export default function GameEditForm(props: Props) {
                     sportCategoryCode: values.sportCategoryCode,
                     start: new Date(values.start).toISOString(),
                     type: values.type,
+                    status: values.status,
                     participants: values.participant.map(participant => ({
                         facultyId: Number(participant.facultyId),
                         scoreType: values.scoreType,
@@ -86,7 +88,7 @@ export default function GameEditForm(props: Props) {
                 await handleSubmit(data);
             }}
         >
-            {({ values, handleChange, isSubmitting }) => (
+            {({ values, handleChange, isSubmitting, handleSubmit, setFieldValue }) => (
                 <Form>
                     <Stack spacing={5}>
                         <Stack direction={["column", "row"]} spacing={5}>
@@ -209,7 +211,13 @@ export default function GameEditForm(props: Props) {
                                 </>
                             )}
                         </FieldArray>
-                        <Button type="submit" colorScheme="green" mt={5} isLoading={isSubmitting} loadingText="กำลังบันทึก"> <Icon as={AiTwotoneSave} mr={1} /> บันทึก</Button>
+                        <Stack>
+                            <Button type="submit" colorScheme="green" mt={5} isLoading={isSubmitting} loadingText="กำลังบันทึก"> <Icon as={AiTwotoneSave} mr={1} /> บันทึก</Button>
+                            <Button type="button" colorScheme="pink" mt={5} isLoading={isSubmitting} loadingText="กำลังประกาศ" onClick={() => {
+                                setFieldValue("status", "SCORED")
+                                handleSubmit()
+                            }}> <Icon as={AiTwotoneSave} mr={1} /> ประกาศผล</Button>
+                        </Stack>
                     </Stack>
                 </Form>
             )

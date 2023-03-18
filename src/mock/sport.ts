@@ -29,7 +29,7 @@ export const gameData: Game = {
     start: new Date().toISOString(),
     status: GameStatus.SCHEDULED,
     type: "REGULAR",
-    updatedAt: new Date(),
+    updatedAt: new Date().toISOString(),
     sport: {
         code: "AH",
         name: "กรีฑา"

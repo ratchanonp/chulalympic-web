@@ -1,7 +1,9 @@
 import { Game, GameStatus, Participant } from "@/interfaces/game.interface";
 import { SportCategory } from "@/interfaces/sport.interface";
+import formatTimeAgo from "@/utils/timeformat";
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Badge, Box, Flex, HStack, Icon, Stack, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue, VStack } from "@chakra-ui/react";
 import { AiFillClockCircle, AiFillEnvironment, AiFillInfoCircle } from "react-icons/ai/";
+import { BsDot } from "react-icons/bs";
 import GameCardSkeleton from "./GameCardSkeleton";
 
 interface Props {
@@ -41,7 +43,9 @@ function GameCard(props: Props) {
     if (isLoading) return (<GameCardSkeleton />);
     if (!gameData) return (<></>);
 
-    const { participant, sport, sportCategory, start, venue, status, id } = gameData;
+    const { participant, sport, sportCategory, start, venue, status, id, updatedAt } = gameData;
+
+    const rtf = new Intl.RelativeTimeFormat("th", { numeric: "auto" });
 
 
     return (
@@ -139,7 +143,10 @@ function GameCard(props: Props) {
                                         {participant.length != 2 && (<MoreDetail start={new Date(start)} sportCategory={sportCategory} />)}
                                     </Flex>
                                 </HStack>
-                                <Text fontSize="sm" fontFamily="athiti" color="gray.300">{id}</Text>
+                                <HStack divider={<><Icon as={BsDot} color="gray.200" /></>}>
+                                    <Text fontSize="sm" fontFamily="athiti" color="gray.300">{id}</Text>
+                                    <Text fontSize="sm" fontFamily="athiti" color="gray.300">{formatTimeAgo(new Date(updatedAt))}</Text>
+                                </HStack>
                             </VStack>
                             {participant.length > 2 && (<Flex ml="auto" pl={2}>
                                 <AccordionIcon />

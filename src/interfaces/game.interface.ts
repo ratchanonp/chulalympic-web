@@ -13,7 +13,7 @@ export interface Game {
     start: string;
     status: GameStatus;
     type: string;
-    updatedAt: Date;
+    updatedAt: string;
     sport: Sport;
     sportCategory: SportCategory;
     venue: Venue;
