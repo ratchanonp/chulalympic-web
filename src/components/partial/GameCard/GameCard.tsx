@@ -301,10 +301,10 @@ function ParticipantTable({ participant, status }: { participant: Participant[],
 
     // sort by score high to low
     let sorted, scoreTypeLabel;
-    if (participant[0].scoreType == "POINT") sorted = [...participant].sort((a, b) => b.value - a.value);
+    if (participant[0]?.scoreType == "POINT") sorted = [...participant].sort((a, b) => b.value - a.value);
     else sorted = [...participant].sort((a, b) => a.value - b.value);
 
-    switch (participant[0].scoreType) {
+    switch (participant[0]?.scoreType) {
         case "POINT":
             scoreTypeLabel = "คะแนน";
             break;
