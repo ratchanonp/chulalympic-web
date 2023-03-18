@@ -111,7 +111,7 @@ function GameCard(props: Props) {
                                                     fontSize={{ base: "md", md: "2xl" }}
                                                     fontWeight="bold"
                                                 >
-                                                    {getTime(start)}
+                                                    {getTime(new Date(start))}
                                                 </Badge>
                                             </Text>
                                         </VStack>)}
@@ -134,9 +134,9 @@ function GameCard(props: Props) {
                                                 {sport.name}
                                             </Text>
                                         </VStack>
-                                        {participant.length == 2 && !isExpanded && (<VSScore participants={participant} start={start} status={status} />)}
-                                        {participant.length == 2 && isExpanded && (<MoreDetail start={start} sportCategory={sportCategory} />)}
-                                        {participant.length != 2 && (<MoreDetail start={start} sportCategory={sportCategory} />)}
+                                        {participant.length == 2 && !isExpanded && (<VSScore participants={participant} start={new Date(start)} status={status} />)}
+                                        {participant.length == 2 && isExpanded && (<MoreDetail start={new Date(start)} sportCategory={sportCategory} />)}
+                                        {participant.length != 2 && (<MoreDetail start={new Date(start)} sportCategory={sportCategory} />)}
                                     </Flex>
                                 </HStack>
                                 <Text fontSize="sm" fontFamily="athiti" color="gray.300">{id}</Text>

@@ -26,7 +26,7 @@ export const gameData: Game = {
     createdAt: new Date(),
     end: null,
     reporterId: null,
-    start: new Date(),
+    start: new Date().toISOString(),
     status: GameStatus.SCHEDULED,
     type: "REGULAR",
     updatedAt: new Date(),

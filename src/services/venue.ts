@@ -1,9 +1,9 @@
-import { VenuesResponse } from "@/interfaces/venue.interface";
+import { Venue } from "@/interfaces/venue.interface";
 import { api } from "./api";
 
 export const venueApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getVenues: build.query<VenuesResponse, void>({
+        getVenues: build.query<Venue[], void>({
             query: () => "venues",
         }),
     }),

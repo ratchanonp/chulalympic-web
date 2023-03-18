@@ -1,9 +1,9 @@
-import { FacultiesResponse, FacultyResponse } from "@/interfaces/faculty.interface";
+import { Faculty, FacultyResponse } from "@/interfaces/faculty.interface";
 import { api } from "./api";
 
 export const facultyApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getFaculties: build.query<FacultiesResponse, void>({
+        getFaculties: build.query<Faculty[], void>({
             query: () => "faculty",
         }),
         getFaculty: build.query<FacultyResponse, string>({

@@ -10,7 +10,7 @@ export interface Game {
     createdAt: Date;
     end?: any;
     reporterId?: any;
-    start: Date;
+    start: string;
     status: GameStatus;
     type: string;
     updatedAt: Date;
@@ -37,6 +37,7 @@ export enum GameStatus {
 };
 
 export type GamesResponse = Game[];
+export type GameResponse = Game;
 
 
 export interface CreateGame {
@@ -47,6 +48,18 @@ export interface CreateGame {
     status: GameStatus;
     type: string;
     participants: CreateParticipant[];
+}
+
+export interface UpdateGame extends Partial<Game> {
+    id: string;
+    participants: UpdateParticipant[]
+}
+
+export interface UpdateParticipant {
+    facultyId: number;
+    scoreType: string;
+    value: number;
+    medal?: any;
 }
 
 export interface CreateParticipant {

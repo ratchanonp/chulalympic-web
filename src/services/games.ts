@@ -1,5 +1,5 @@
 import { getGamesFilter } from "@/interfaces/filter.interface";
-import { CreateGame, GamesResponse } from "@/interfaces/game.interface";
+import { CreateGame, Game, GameResponse, GamesResponse, UpdateGame } from "@/interfaces/game.interface";
 import { api } from "./api";
 
 export const gamesApi = api.injectEndpoints({
@@ -15,6 +15,9 @@ export const gamesApi = api.injectEndpoints({
                 },
             }),
         }),
+        getGame: build.query<Game, string>({
+            query: (id) => `games/${id}`,
+        }),
         getDates: build.query<string[], void>({
             query: () => "games/dates",
         }),
@@ -25,7 +28,14 @@ export const gamesApi = api.injectEndpoints({
                 body: game,
             }),
         }),
-    })
+        updateGame: build.mutation<GameResponse, UpdateGame>({
+            query: (game) => ({
+                url: `/games/${game.id}`,
+                method: "PATCH",
+                body: game,
+            }),
+        })
+    }),
 });
 
-export const { useLazyGetGamesQuery, useGetGamesQuery, useGetDatesQuery, useCreateGameMutation } = gamesApi;
+export const { useLazyGetGamesQuery, useGetGamesQuery, useGetDatesQuery, useCreateGameMutation, useLazyGetGameQuery, useUpdateGameMutation } = gamesApi;
