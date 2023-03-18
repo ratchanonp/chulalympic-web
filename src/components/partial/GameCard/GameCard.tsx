@@ -326,7 +326,7 @@ function ParticipantTable({ participant, status }: { participant: Participant[],
                 <Thead>
                     <Th>อันดับ</Th>
                     <Th>{scoreTypeLabel}</Th>
-                    <Th isNumeric>คะแนน</Th>
+                    {participant[0]?.scoreType !== "POSITION" && (<Th isNumeric>{scoreTypeLabel}</Th>)}
                     <Th>เหรียญ</Th>
                 </Thead>
                 <Tbody>
