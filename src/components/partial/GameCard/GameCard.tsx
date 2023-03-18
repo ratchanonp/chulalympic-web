@@ -44,7 +44,7 @@ function GameCard(props: Props) {
     if (isLoading) return (<GameCardSkeleton />);
     if (!gameData) return (<></>);
 
-    const { participant, sport, sportCategory, start, venue, status, id, updatedAt } = gameData;
+    const { participant, sport, sportCategory, start, venue, status, id, updatedAt, note } = gameData;
 
     const rtf = new Intl.RelativeTimeFormat("th", { numeric: "auto" });
 
@@ -155,6 +155,7 @@ function GameCard(props: Props) {
                         </AccordionButton>
                         <AccordionPanel>
                             <ParticipantTable participant={participant} status={status} />
+                            <Text fontFamily="athiti" fontWeight="bold" mt={2}>หมายเหตุ: <Text as="span" fontWeight="normal">{note}</Text></Text>
                         </AccordionPanel>
                     </>)}
             </AccordionItem>
@@ -242,7 +243,7 @@ function VSScore({ participants, start, status }: { participants: Participant[],
                 base: "row",
                 md: "row-reverse",
             }} justifyContent={{ base: "space-between", md: "left" }} alignItems="center" w="100%">
-                <Text fontFamily="athiti" fontSize={{ base: "sm", md: "xl", lg: "2xl" }} >{participants[1].faculty.name}</Text>
+                <Text fontFamily="athiti" fontSize={{ base: "sm", md: "xl", lg: "2xl" }}>{participants[1].faculty.name}</Text>
                 {scoreType == "POINT" && (<Text fontFamily="athiti" fontSize={{ base: "lg", md: "4xl" }} fontWeight="bold">{participants[1].value}</Text>)}
             </Stack>
         </Stack>

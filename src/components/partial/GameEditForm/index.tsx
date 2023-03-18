@@ -3,7 +3,7 @@ import { Game, UpdateGame } from "@/interfaces/game.interface";
 import { Venue } from "@/interfaces/venue.interface";
 import { useUpdateGameMutation } from "@/services/games";
 import { MEDAL_TYPE, ROUND_TYPE, SCORE_TYPE } from "@/utils/constant/game";
-import { Button, FormControl, FormLabel, Heading, Icon, Input, Select, Stack, Text, useToast } from "@chakra-ui/react";
+import { Button, FormControl, FormLabel, Heading, Icon, Input, Select, Stack, Text, Textarea, useToast } from "@chakra-ui/react";
 import { FieldArray, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { AiTwotoneSave } from "react-icons/ai";
@@ -12,6 +12,7 @@ import {
     BsFillCalendarEventFill,
     BsFillPeopleFill
 } from "react-icons/bs";
+import { GrNotes } from "react-icons/gr";
 import { HiLibrary } from "react-icons/hi";
 import { ImSortNumbericDesc } from "react-icons/im";
 import { IoLocationSharp } from "react-icons/io5";
@@ -53,6 +54,7 @@ export default function GameEditForm(props: Props) {
                 medal: participant.medal
             })),
         scoreType: data.participant[0]?.scoreType,
+        note: data.note
     }
 
     async function handleSubmit(value: UpdateGame) {
@@ -93,6 +95,7 @@ export default function GameEditForm(props: Props) {
                             value: Number(participant.value),
                             medal: participant.medal ? participant.medal : null
                         })),
+                    note: values.note
                 }
 
                 await handleSubmit(data);
@@ -183,8 +186,7 @@ export default function GameEditForm(props: Props) {
                                                                 id={`participant.${index}.value`}
                                                                 type={values.scoreType === "time" ? "time" : "number"}
                                                                 value={participant.value}
-                                                                onChange={handleChange}
-                                                            />
+                                                                onChange={handleChange} />
                                                         </FormControl>
                                                         <FormControl>
                                                             <FormLabel fontWeight="semibold" display="flex" alignItems="center">
@@ -222,11 +224,15 @@ export default function GameEditForm(props: Props) {
                                 </>
                             )}
                         </FieldArray>
+                        <FormControl>
+                            <FormLabel fontWeight="semibold"><Icon as={GrNotes} mr={1} />หมายเหตุ</FormLabel>
+                            <Textarea id="note" onChange={handleChange} />
+                        </FormControl>
                         <Stack>
                             <Button type="submit" colorScheme="green" mt={5} isLoading={isSubmitting} loadingText="กำลังบันทึก"> <Icon as={AiTwotoneSave} mr={1} /> บันทึก</Button>
                             <Button type="button" colorScheme="pink" mt={5} isLoading={isSubmitting} loadingText="กำลังประกาศ" onClick={() => {
-                                setFieldValue("status", "SCORED")
-                                handleSubmit()
+                                setFieldValue("status", "SCORED");
+                                handleSubmit();
                             }}> <Icon as={AiTwotoneSave} mr={1} /> ประกาศผล</Button>
                         </Stack>
                     </Stack>
