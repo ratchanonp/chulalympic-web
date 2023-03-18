@@ -42,14 +42,16 @@ export default function GameEditForm(props: Props) {
         start: dateTime.toISOString().slice(0, 16),
         type: data.type,
         status: data.status,
-        participant: data.participant.map(participant => ({
-            id: participant.id,
-            facultyId: participant.facultyId,
-            scoreType: participant.scoreType,
-            value: participant.value,
-            medal: participant.medal
-        })),
-        scoreType: data.participant[0].scoreType,
+        participant: data.participant
+            .sort((a, b) => a.value - b.value * (data.participant[0]?.scoreType == "POINT" ? -1 : 1))
+            .map(participant => ({
+                id: participant.id,
+                facultyId: participant.facultyId,
+                scoreType: participant.scoreType,
+                value: participant.value,
+                medal: participant.medal
+            })),
+        scoreType: data.participant[0]?.scoreType,
     }
 
     async function handleSubmit(value: UpdateGame) {
@@ -83,7 +85,6 @@ export default function GameEditForm(props: Props) {
                     type: values.type,
                     status: values.status,
                     participants: values.participant
-                        .sort((a, b) => a.value - b.value * (values.scoreType == "POINT" ? -1 : 1))
                         .map(participant => ({
                             id: participant.id,
                             facultyId: Number(participant.facultyId),
