@@ -214,6 +214,8 @@ function VSScore({ participants, start, status }: { participants: Participant[],
         )
     }
 
+    const scoreType = participants[0]?.scoreType;
+
 
     return (
         <Stack w={["60%", "80%"]} direction={{
@@ -232,7 +234,8 @@ function VSScore({ participants, start, status }: { participants: Participant[],
 
         >
             <HStack justifyContent={{ base: "space-between", md: "right" }} alignItems="center" w="100%">
-                <Text fontFamily="athiti" fontSize={{ base: "sm", md: "xl", lg: "2xl" }} >{participants[0].faculty.name}</Text> <Text fontFamily="athiti" fontSize={{ base: "lg", md: "4xl" }} fontWeight="bold">{participants[0].value}</Text>
+                <Text fontFamily="athiti" fontSize={{ base: "sm", md: "xl", lg: "2xl" }} >{participants[0].faculty.name}</Text>
+                {scoreType == "POINT" && (<Text fontFamily="athiti" fontSize={{ base: "lg", md: "4xl" }} fontWeight="bold">{participants[0].value}</Text>)}
             </HStack>
             <Box display={{ base: "none", md: "block" }}> - </Box>
             <Stack direction={{
@@ -240,7 +243,7 @@ function VSScore({ participants, start, status }: { participants: Participant[],
                 md: "row-reverse",
             }} justifyContent={{ base: "space-between", md: "left" }} alignItems="center" w="100%">
                 <Text fontFamily="athiti" fontSize={{ base: "sm", md: "xl", lg: "2xl" }} >{participants[1].faculty.name}</Text>
-                <Text fontFamily="athiti" fontSize={{ base: "lg", md: "4xl" }} fontWeight="bold">{participants[1].value}</Text>
+                {scoreType == "POINT" && (<Text fontFamily="athiti" fontSize={{ base: "lg", md: "4xl" }} fontWeight="bold">{participants[1].value}</Text>)}
             </Stack>
         </Stack>
     )
