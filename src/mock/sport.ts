@@ -45,6 +45,7 @@ export const gameData: Game = {
     },
     participant: [
         {
+            id: 1,
             facultyId: 1,
             scoreType: "POINT",
             value: 0,
@@ -56,6 +57,7 @@ export const gameData: Game = {
             }
         },
         {
+            id: 2,
             facultyId: 2,
             scoreType: "POINT",
             value: 0,
@@ -67,6 +69,7 @@ export const gameData: Game = {
             }
         },
         {
+            id: 3,
             facultyId: 3,
             scoreType: "POINT",
             value: 0,

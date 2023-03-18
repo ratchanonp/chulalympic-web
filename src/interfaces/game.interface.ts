@@ -21,6 +21,7 @@ export interface Game {
 }
 
 export interface Participant {
+    id: number;
     facultyId: number;
     scoreType: string;
     value: number;
@@ -56,6 +57,7 @@ export interface UpdateGame extends Partial<Game> {
 }
 
 export interface UpdateParticipant {
+    id: number;
     facultyId: number;
     scoreType: string;
     value: number;

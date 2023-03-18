@@ -5,6 +5,7 @@ import { useUpdateGameMutation } from "@/services/games";
 import { MEDAL_TYPE, ROUND_TYPE, SCORE_TYPE } from "@/utils/constant/game";
 import { Button, FormControl, FormLabel, Heading, Icon, Input, Select, Stack, Text, useToast } from "@chakra-ui/react";
 import { FieldArray, Form, Formik } from "formik";
+import { useRouter } from "next/router";
 import { AiTwotoneSave } from "react-icons/ai";
 import { BiAddToQueue, BiMedal } from "react-icons/bi";
 import {
@@ -24,6 +25,8 @@ interface Props {
 
 export default function GameEditForm(props: Props) {
 
+    const router = useRouter();
+
     const { gameData: data, venuesData: Venues, facultiesData: Faculties } = props;
     const toast = useToast();
     const [updateGame, result] = useUpdateGameMutation();
@@ -40,6 +43,7 @@ export default function GameEditForm(props: Props) {
         type: data.type,
         status: data.status,
         participant: data.participant.map(participant => ({
+            id: participant.id,
             facultyId: participant.facultyId,
             scoreType: participant.scoreType,
             value: participant.value,
@@ -59,6 +63,7 @@ export default function GameEditForm(props: Props) {
                 duration: 3000,
                 isClosable: true,
             });
+            router.reload();
         } catch (error) {
             console.log(error);
         }
@@ -78,6 +83,7 @@ export default function GameEditForm(props: Props) {
                     type: values.type,
                     status: values.status,
                     participants: values.participant.map(participant => ({
+                        id: participant.id,
                         facultyId: Number(participant.facultyId),
                         scoreType: values.scoreType,
                         value: Number(participant.value),
