@@ -18,7 +18,7 @@ export interface Game {
     sportCategory: SportCategory;
     venue: Venue;
     participant: Participant[];
-    note: string
+    note?: string
 }
 
 export interface Participant {
