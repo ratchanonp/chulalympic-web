@@ -107,8 +107,8 @@ function FacultyGames() {
         <Stack w="full" borderRadius={10} spacing={3} flex="auto">
             {Object.entries(gamesByDate).map(([date, games]) => {
 
-                const spiltDate = date.split('/') // 0 = month, 1 = day, 2 = year
-                const format = new Date(`${spiltDate[2]}-${spiltDate[0]}-${spiltDate[1]}`)
+                const spiltDate = date.split('/') // 1 = month, 0 = day, 2 = year
+                const format = new Date(`${spiltDate[2]}-${spiltDate[1]}-${spiltDate[0]}`)
 
                 return (
                     <Stack key={date} w="full" borderRadius={10} spacing={3} flex="auto" bgColor="white" mt={4}>
@@ -116,7 +116,6 @@ function FacultyGames() {
                             <Icon mr={2} as={IoCalendar} />
                             {
                                 format.toLocaleDateString('th-TH', {
-                                    year: 'numeric',
                                     month: 'long',
                                     day: 'numeric',
                                 })
