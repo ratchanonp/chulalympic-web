@@ -155,7 +155,7 @@ function GameCard(props: Props) {
                         </AccordionButton>
                         <AccordionPanel>
                             <ParticipantTable participant={participant} status={status} />
-                            <Text fontFamily="athiti" fontWeight="bold" mt={2}>หมายเหตุ: <Text as="span" fontWeight="normal">{note}</Text></Text>
+                            {note && (<Text fontFamily="athiti" fontWeight="bold" mt={2}>หมายเหตุ: <Text as="span" fontWeight="normal">{note}</Text></Text>)}
                         </AccordionPanel>
                     </>)}
             </AccordionItem>
