@@ -226,7 +226,7 @@ export default function GameEditForm(props: Props) {
                         </FieldArray>
                         <FormControl>
                             <FormLabel fontWeight="semibold"><Icon as={GrNotes} mr={1} />หมายเหตุ</FormLabel>
-                            <Textarea id="note" onChange={handleChange} />
+                            <Textarea id="note" onChange={handleChange} value={values.note} />
                         </FormControl>
                         <Stack>
                             <Button type="submit" colorScheme="green" mt={5} isLoading={isSubmitting} loadingText="กำลังบันทึก"> <Icon as={AiTwotoneSave} mr={1} /> บันทึก</Button>
