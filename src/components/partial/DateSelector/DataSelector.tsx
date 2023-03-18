@@ -47,6 +47,7 @@ export function DateSelector() {
 
     if (value !== DDMMYYY_TH_FORMAT.format(selectDate)) {
         setValue(DDMMYYY_TH_FORMAT.format(selectDate));
+        dispatch(setDate(selectDate));
     }
 
 
