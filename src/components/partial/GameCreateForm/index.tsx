@@ -35,7 +35,7 @@ export default function GameCreateForm() {
         sportCode: "",
         sportCategoryCode: "",
         start: "",
-        venueId: 0,
+        venueId: -1,
         status: "SCHEDULED",
         scoreType: "POINT",
         participant: [
@@ -96,7 +96,7 @@ export default function GameCreateForm() {
                                 <Select id="sportCode" onChange={(e) => {
                                     handleChange(e);
                                     trigger(e.currentTarget.value);
-                                }} required defaultValue="">
+                                }} required value={values.sportCode}>
                                     <option value="" disabled>เลือกกีฬา</option>
                                     {Sports && Sports.map(sport => (
                                         <option key={sport.code} value={sport.code}>{sport.name}</option>
@@ -105,7 +105,7 @@ export default function GameCreateForm() {
                             </FormControl>
                             <FormControl>
                                 <FormLabel fontWeight="semibold"><Icon as={MdOutlineSportsHandball} mr={1} />ประเภทกีฬา </FormLabel>
-                                <Select id="sportCategoryCode" onChange={handleChange} required defaultValue="">
+                                <Select id="sportCategoryCode" onChange={handleChange} required value={values.sportCategoryCode}>
                                     <option value="" disabled>เลือกประเภทกีฬา</option>
                                     {SportCategory && SportCategory.map(sportCategory => (
                                         <option key={sportCategory.code} value={sportCategory.code}>{sportCategory.name}</option>
@@ -116,12 +116,12 @@ export default function GameCreateForm() {
                         <Stack direction={["column", "row"]} spacing={5}>
                             <FormControl>
                                 <FormLabel fontWeight="semibold"><Icon as={BsFillCalendarEventFill} mr={1} />วันที่แข่ง</FormLabel>
-                                <Input id="start" onChange={handleChange} type="datetime-local" required />
+                                <Input id="start" onChange={handleChange} type="datetime-local" required value={values.start} />
                             </FormControl>
                             <FormControl>
                                 <FormLabel fontWeight="semibold"><Icon as={IoLocationSharp} mr={1} />สถานที่แข่ง</FormLabel>
-                                <Select id="venueId" onChange={handleChange} required defaultValue="">
-                                    <option value="" disabled>เลือกสถานที่แข่ง</option>
+                                <Select id="venueId" onChange={handleChange} required value={values.venueId}>
+                                    <option value={-1} disabled>เลือกสถานที่แข่ง</option>
                                     {Venues && Venues.map(venue => (
                                         <option key={venue.id} value={venue.id}>{venue.name}</option>
                                     ))}
@@ -131,7 +131,7 @@ export default function GameCreateForm() {
                         <Stack direction={["column", "row"]} spacing={5}>
                             <FormControl>
                                 <FormLabel fontWeight="semibold"><Icon as={MdOutlineSportsHandball} mr={1} />ประเภทการแข่ง</FormLabel>
-                                <RadioGroup id="type" name="type" aria-required={true} defaultValue="REGULAR">
+                                <RadioGroup id="type" name="type" aria-required={true} value={values.type}>
                                     <Grid templateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gap={2}>
                                         {ROUND_TYPE.map(roundType => (
                                             <Radio key={roundType.value} value={roundType.value} onChange={handleChange}>{roundType.label}</Radio>
@@ -173,7 +173,7 @@ export default function GameCreateForm() {
                                                             id={`participant.${index}.facultyId`}
                                                             onChange={handleChange}
                                                             required
-                                                            defaultValue=""
+                                                            value={participant.facultyId}
                                                         >
                                                             <option value="">เลือกคณะ</option>
                                                             {Faculties && Faculties.map(faculty => (
@@ -200,7 +200,7 @@ export default function GameCreateForm() {
                                                         <Select bgColor="white"
                                                             id={`participant.${index}.medal`}
                                                             onChange={handleChange}
-                                                            defaultValue=""
+                                                            value={participant.medal}
                                                         >
                                                             {MEDAL_TYPE.map(medal => (
                                                                 <option
