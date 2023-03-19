@@ -2,17 +2,18 @@ import { Faculty } from "@/interfaces/faculty.interface";
 import { Game, UpdateGame } from "@/interfaces/game.interface";
 import { Venue } from "@/interfaces/venue.interface";
 import { useUpdateGameMutation } from "@/services/games";
-import { MEDAL_TYPE, ROUND_TYPE, SCORE_TYPE } from "@/utils/constant/game";
-import { Button, FormControl, FormLabel, Heading, Icon, Input, Select, Stack, Text, Textarea, useToast } from "@chakra-ui/react";
+import { GAME_STATUS, MEDAL_TYPE, ROUND_TYPE, SCORE_TYPE } from "@/utils/constant/game";
+import { Button, FormControl, FormLabel, Grid, Heading, Icon, Input, Radio, RadioGroup, Select, Stack, Text, Textarea, useToast } from "@chakra-ui/react";
 import { FieldArray, Form, Formik } from "formik";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { AiTwotoneSave } from "react-icons/ai";
 import { BiAddToQueue, BiMedal } from "react-icons/bi";
 import {
     BsFillCalendarEventFill,
     BsFillPeopleFill
 } from "react-icons/bs";
-import { GrNotes } from "react-icons/gr";
+import { GrNotes, GrStatusInfo } from "react-icons/gr";
 import { HiLibrary } from "react-icons/hi";
 import { ImSortNumbericDesc } from "react-icons/im";
 import { IoLocationSharp } from "react-icons/io5";
@@ -22,13 +23,14 @@ interface Props {
     gameData: Game
     facultiesData: Faculty[]
     venuesData: Venue[]
+    fetchGameData: () => void
 }
 
 export default function GameEditForm(props: Props) {
 
     const router = useRouter();
 
-    const { gameData: data, venuesData: Venues, facultiesData: Faculties } = props;
+    const { gameData: data, venuesData: Venues, facultiesData: Faculties, fetchGameData } = props;
     const toast = useToast();
     const [updateGame, result] = useUpdateGameMutation();
 
@@ -37,6 +39,7 @@ export default function GameEditForm(props: Props) {
 
     const sortedParticipant = [...data.participant].sort((a, b) => a.value - b.value * (data.participant[0]?.scoreType == "POINT" ? -1 : 1));
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const initialValues = {
         id: data.id,
         venueId: data.venue.id,
@@ -57,6 +60,11 @@ export default function GameEditForm(props: Props) {
         note: data.note
     }
 
+    useEffect(() => {
+        console.log(initialValues)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initialValues])
+
     async function handleSubmit(value: UpdateGame) {
         try {
             const res = await updateGame(value).unwrap();
@@ -68,7 +76,7 @@ export default function GameEditForm(props: Props) {
                 duration: 3000,
                 isClosable: true,
             });
-            router.reload();
+            fetchGameData();
         } catch (error) {
             console.log(error);
         }
@@ -131,19 +139,23 @@ export default function GameEditForm(props: Props) {
                         <Stack direction={["column", "row"]} spacing={5}>
                             <FormControl>
                                 <FormLabel fontWeight="semibold"><Icon as={MdOutlineSportsHandball} mr={1} />ประเภทการแข่ง</FormLabel>
-                                <Select id="type" onChange={handleChange}>
-                                    {ROUND_TYPE.map(roundType => (
-                                        <option key={roundType.value} value={roundType.value} selected={roundType.value === data.type}>{roundType.label}</option>
-                                    ))}
-                                </Select>
+                                <RadioGroup id="type" value={values.type}>
+                                    <Grid templateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gap={2}>
+                                        {ROUND_TYPE.map(roundType => (
+                                            <Radio key={roundType.value} value={roundType.value} onChange={handleChange}>{roundType.label}</Radio>
+                                        ))}
+                                    </Grid>
+                                </RadioGroup>
                             </FormControl>
                             <FormControl>
                                 <FormLabel fontWeight="semibold"><Icon as={ImSortNumbericDesc} mr={1} />ประเภทการจัดอันดับ</FormLabel>
-                                <Select id="scoreType" onChange={handleChange}>
-                                    {SCORE_TYPE.map(scoreType => (
-                                        <option key={scoreType.value} value={scoreType.value} selected={scoreType.value === values.scoreType}>{scoreType.label}</option>
-                                    ))}
-                                </Select>
+                                <RadioGroup id="scoreType" value={values.scoreType}>
+                                    <Stack direction="row">
+                                        {SCORE_TYPE.map(scoreType => (
+                                            <Radio key={scoreType.value} value={scoreType.value} onChange={handleChange}>{scoreType.label}</Radio>
+                                        ))}
+                                    </Stack>
+                                </RadioGroup>
                             </FormControl>
                         </Stack>
 
@@ -228,12 +240,18 @@ export default function GameEditForm(props: Props) {
                             <FormLabel fontWeight="semibold"><Icon as={GrNotes} mr={1} />หมายเหตุ</FormLabel>
                             <Textarea id="note" onChange={handleChange} value={values.note} />
                         </FormControl>
-                        <Stack>
+                        <FormControl>
+                            <FormLabel display="flex" alignItems="center" fontWeight="semibold"><Icon as={GrStatusInfo} mr={1} /> สถานะ</FormLabel>
+                            <RadioGroup id="status" name="status" onChange={handleChange} value={values.status}>
+                                <Stack direction="row">
+                                    {GAME_STATUS.map(status => (
+                                        <Radio key={status.value} value={status.value} onChange={handleChange} >{status.label}</Radio>
+                                    ))}
+                                </Stack>
+                            </RadioGroup>
+                        </FormControl>
+                        <Stack >
                             <Button type="submit" colorScheme="green" mt={5} isLoading={isSubmitting} loadingText="กำลังบันทึก"> <Icon as={AiTwotoneSave} mr={1} /> บันทึก</Button>
-                            <Button type="button" colorScheme="pink" mt={5} isLoading={isSubmitting} loadingText="กำลังประกาศ" onClick={() => {
-                                setFieldValue("status", "SCORED");
-                                handleSubmit();
-                            }}> <Icon as={AiTwotoneSave} mr={1} /> ประกาศผล</Button>
                         </Stack>
                     </Stack>
                 </Form>

@@ -1,8 +1,8 @@
 const ROUND_TYPE = [
     { value: "REGULAR", label: "ปกติ" },
-    { value: "QUALIFYING", label: "คัดเลือก" },
-    { value: "QUARTER_FINAL", label: "รอบ 4 ทีม" },
-    { value: "SEMI_FINAL", label: "รอบรองชนะเลิศ" },
+    { value: "QUALIFYING", label: "รอบคัดเลือก" },
+    { value: "QUARTER_FINAL", label: "รอบก่อนชิงชนะเลิศ (8)" },
+    { value: "SEMI_FINAL", label: "รอบรองชนะเลิศ (4)" },
     { value: "FINAL", label: "รอบชิงชนะเลิศ" },
 ]
 
@@ -30,5 +30,6 @@ export {
     ROUND_TYPE,
     SCORE_TYPE,
     MEDAL_TYPE,
+    GAME_STATUS,
 }
 

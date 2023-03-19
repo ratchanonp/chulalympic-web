@@ -4,8 +4,8 @@ import { useGetFacultiesQuery } from "@/services/faculty";
 import { useLazyGetGameQuery } from "@/services/games";
 import { useGetVenuesQuery } from "@/services/venue";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
-import { Heading, Icon, Stack } from "@chakra-ui/react";
-import Link from "next/link";
+import { Box, Flex, Heading, Icon, Link, Stack } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -29,6 +29,8 @@ export default function GameEdit({ }: Props) {
         }
     }, [id, router.isReady, trigger])
 
+    function fetchData() { trigger(id as string); }
+
     if (isLoading) return <div>Loading...</div>
     if (error || !data) return <div>Not Found</div>
 
@@ -36,14 +38,19 @@ export default function GameEdit({ }: Props) {
     if (!Venue || !Faculty) return <div>Not Found</div>
 
     return (
-        <>
-            <Container fontFamily="athiti">
-                <Stack>
-                    <Link href="/secret/games"> <Icon as={ChevronLeftIcon} mr={1} />Back</Link>
-                    <Heading>{data.id}</Heading>
-                    <GameEditForm gameData={data} venuesData={Venue} facultiesData={Faculty} />
-                </Stack >
-            </Container >
-        </>
+        <Box w="full" position="relative">
+            <Stack>
+                <Flex position="sticky" top={0} zIndex={1} bg="white" direction="row" alignItems="center" py={2} shadow="sm">
+                    <Container py={0}>
+                        <Link as={NextLink} display="flex" alignItems="center" href="/secret/games"> <Icon fontSize="5xl" as={ChevronLeftIcon} mr={1} />  <Heading>{data.id}</Heading></Link>
+                    </Container>
+                </Flex>
+                <Flex>
+                    <Container fontFamily="athiti" position="relative" py={0} pt={2} pb={4}>
+                        <GameEditForm gameData={data} venuesData={Venue} facultiesData={Faculty} fetchGameData={fetchData} />
+                    </Container >
+                </Flex>
+            </Stack >
+        </Box>
     )
 }
