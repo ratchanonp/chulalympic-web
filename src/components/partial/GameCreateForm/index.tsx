@@ -200,8 +200,7 @@ export default function GameCreateForm() {
                                                         <Select bgColor="white"
                                                             id={`participant.${index}.medal`}
                                                             onChange={handleChange}
-                                                            required
-                                                            defaultValue="SCHEDULED"
+                                                            defaultValue=""
                                                         >
                                                             {MEDAL_TYPE.map(medal => (
                                                                 <option
