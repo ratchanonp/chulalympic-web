@@ -21,7 +21,7 @@ export const gamesApi = api.injectEndpoints({
         getDates: build.query<string[], void>({
             query: () => "games/dates",
         }),
-        createGame: build.mutation<void, CreateGame>({
+        createGame: build.mutation<GameResponse, CreateGame>({
             query: (game) => ({
                 url: "/games",
                 method: "POST",

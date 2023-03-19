@@ -47,9 +47,10 @@ export interface CreateGame {
     sportCode: string;
     sportCategoryCode: string;
     start: string;
-    status: GameStatus;
+    status: string;
     type: string;
     participants: CreateParticipant[];
+    note?: string;
 }
 
 export interface UpdateGame extends Partial<Game> {
