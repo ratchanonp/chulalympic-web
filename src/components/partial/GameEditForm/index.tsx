@@ -54,7 +54,8 @@ export default function GameEditForm(props: Props) {
                 facultyId: participant.facultyId,
                 scoreType: participant.scoreType,
                 value: participant.value,
-                medal: participant.medal
+                medal: participant.medal,
+                note: participant.note || ""
             })),
         scoreType: data.participant[0]?.scoreType,
         note: data.note
@@ -101,7 +102,8 @@ export default function GameEditForm(props: Props) {
                             facultyId: Number(participant.facultyId),
                             scoreType: values.scoreType,
                             value: Number(participant.value),
-                            medal: participant.medal ? participant.medal : null
+                            medal: participant.medal ? participant.medal : null,
+                            note: participant.note
                         })),
                     note: values.note
                 }
@@ -139,20 +141,20 @@ export default function GameEditForm(props: Props) {
                         <Stack direction={["column", "row"]} spacing={5}>
                             <FormControl>
                                 <FormLabel fontWeight="semibold"><Icon as={MdOutlineSportsHandball} mr={1} />ประเภทการแข่ง</FormLabel>
-                                <RadioGroup id="type" value={values.type}>
+                                <RadioGroup id="type" name="type" value={values.type}>
                                     <Grid templateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gap={2}>
                                         {ROUND_TYPE.map(roundType => (
-                                            <Radio key={roundType.value} value={roundType.value} onChange={handleChange}>{roundType.label}</Radio>
+                                            <Radio key={roundType.value} id="type" name="type" value={roundType.value} onChange={handleChange}>{roundType.label}</Radio>
                                         ))}
                                     </Grid>
                                 </RadioGroup>
                             </FormControl>
                             <FormControl>
                                 <FormLabel fontWeight="semibold"><Icon as={ImSortNumbericDesc} mr={1} />ประเภทการจัดอันดับ</FormLabel>
-                                <RadioGroup id="scoreType" value={values.scoreType}>
+                                <RadioGroup id="scoreType" name="scoreType" value={values.scoreType}>
                                     <Stack direction="row">
                                         {SCORE_TYPE.map(scoreType => (
-                                            <Radio key={scoreType.value} value={scoreType.value} onChange={handleChange}>{scoreType.label}</Radio>
+                                            <Radio key={scoreType.value} name="scoreType" value={scoreType.value} onChange={handleChange}>{scoreType.label}</Radio>
                                         ))}
                                     </Stack>
                                 </RadioGroup>
@@ -217,6 +219,10 @@ export default function GameEditForm(props: Props) {
                                                                     >{medal.label}</option>
                                                                 ))}
                                                             </Select>
+                                                        </FormControl>
+                                                        <FormControl>
+                                                            <FormLabel fontWeight="semibold"><Icon as={GrNotes} mr={1} />หมายเหตุ</FormLabel>
+                                                            <Input bgColor="white" id={`participant.${index}.note`} onChange={handleChange} value={participant.note} />
                                                         </FormControl>
                                                         <Button
                                                             colorScheme="red"

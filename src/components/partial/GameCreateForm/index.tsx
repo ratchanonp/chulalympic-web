@@ -39,7 +39,7 @@ export default function GameCreateForm() {
         status: "SCHEDULED",
         scoreType: "POINT",
         participant: [
-            { facultyId: 0, value: 0, medal: "" },
+            { facultyId: 0, value: 0, medal: "", note: "" },
         ],
         note: "",
         type: "REGULAR",
@@ -209,6 +209,10 @@ export default function GameCreateForm() {
                                                                 >{medal.label}</option>
                                                             ))}
                                                         </Select>
+                                                    </FormControl>
+                                                    <FormControl>
+                                                        <FormLabel fontWeight="semibold"><Icon as={GrNotes} mr={1} />หมายเหตุ</FormLabel>
+                                                        <Input bgColor="white" id={`participant.${index}.note`} name={`participant.${index}.note`} onChange={handleChange} value={participant.note} />
                                                     </FormControl>
                                                     <Button
                                                         colorScheme="red"

@@ -1,9 +1,9 @@
-import { Container as ChakraContaier } from "@chakra-ui/react";
+import { Container as ChakraContaier, ContainerProps, forwardRef } from "@chakra-ui/react";
 
-export default function Container(props: React.ComponentProps<typeof ChakraContaier>) {
+const Container = forwardRef<ContainerProps, 'div'>((props, ref) => {
     return (
-        <ChakraContaier maxW="container.xl" {...props} py={props.py ?? 10}>
-            {props.children}
-        </ChakraContaier>
-    );
-}
+        <ChakraContaier maxW="container.xl" ref={ref} py={props.py ?? 10} {...props} />
+    )
+});
+
+export default Container;

@@ -3,8 +3,8 @@ import GameEditForm from "@/components/partial/GameEditForm";
 import { useGetFacultiesQuery } from "@/services/faculty";
 import { useLazyGetGameQuery } from "@/services/games";
 import { useGetVenuesQuery } from "@/services/venue";
-import { ChevronLeftIcon } from "@chakra-ui/icons";
-import { Box, Flex, Heading, Icon, Link, Stack } from "@chakra-ui/react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { Box, Flex, Heading, HStack, Icon, Link, Stack } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -27,7 +27,7 @@ export default function GameEdit({ }: Props) {
         if (router.isReady) {
             trigger(id as string);
         }
-    }, [id, router.isReady, trigger])
+    }, [id])
 
     function fetchData() { trigger(id as string); }
 
@@ -36,6 +36,9 @@ export default function GameEdit({ }: Props) {
 
     if (isVenueLoading || isFacultyLoading) return <div>Loading...</div>
     if (!Venue || !Faculty) return <div>Not Found</div>
+
+    const previousId = data.id.slice(0, -4) + (parseInt(data.id.slice(-4)) - 1).toString().padStart(4, '0');
+    const nextId = data.id.slice(0, -4) + (parseInt(data.id.slice(-4)) + 1).toString().padStart(4, '0');
 
     return (
         <Box w="full" position="relative">
@@ -48,6 +51,14 @@ export default function GameEdit({ }: Props) {
                 <Flex>
                     <Container fontFamily="athiti" position="relative" py={0} pt={2} pb={4}>
                         <GameEditForm gameData={data} venuesData={Venue} facultiesData={Faculty} fetchGameData={fetchData} />
+                    </Container >
+                </Flex>
+                <Flex>
+                    <Container fontFamily="athiti" position="relative" py={0} pt={2} pb={4}>
+                        <HStack justifyContent="space-between">
+                            <Link href={`/secret/games/${previousId}/edit`}><ChevronLeftIcon /> {previousId}</Link>
+                            <Link href={`/secret/games/${nextId}/edit`}>{nextId}<ChevronRightIcon /></Link>
+                        </HStack>
                     </Container >
                 </Flex>
             </Stack >

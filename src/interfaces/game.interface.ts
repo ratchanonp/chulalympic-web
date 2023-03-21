@@ -29,6 +29,7 @@ export interface Participant {
     medal?: string;
     gameId: string;
     faculty: Faculty;
+    note?: string;
 }
 
 export enum GameStatus {
@@ -64,8 +65,10 @@ export interface UpdateParticipant {
     scoreType: string;
     value: number;
     medal?: any;
+    note?: string;
 }
 
 export interface CreateParticipant {
     facultyId: number;
+    note?: string;
 }

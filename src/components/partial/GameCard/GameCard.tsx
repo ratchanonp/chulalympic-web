@@ -323,6 +323,8 @@ function ParticipantTable({ participant, status }: { participant: Participant[],
             break;
     }
 
+    const showNote = participant.some(p => p.note);
+
 
     return (
         <TableContainer>
@@ -332,6 +334,7 @@ function ParticipantTable({ participant, status }: { participant: Participant[],
                     <Th>{scoreTypeLabel}</Th>
                     {participant[0]?.scoreType !== "POSITION" && (<Th isNumeric>{scoreTypeLabel}</Th>)}
                     <Th>เหรียญ</Th>
+                    {showNote && (<Th>หมายเหตุ</Th>)}
                 </Thead>
                 <Tbody>
                     {sorted.map((p, i) => (
@@ -340,6 +343,7 @@ function ParticipantTable({ participant, status }: { participant: Participant[],
                             <Td>{p.faculty.name}</Td>
                             {participant[0]?.scoreType !== "POSITION" && (<Td isNumeric>{status == GameStatus.SCORED ? p.value : "-"}</Td>)}
                             <Td>{p.medal ? medalLabel(p.medal) : "-"}</Td>
+                            {showNote && <Td>{p.note}</Td>}
                         </Tr>
                     ))}
                 </Tbody>
