@@ -107,8 +107,11 @@ function FacultyGames() {
         <Stack w="full" borderRadius={10} spacing={3} flex="auto">
             {Object.entries(gamesByDate).map(([date, games]) => {
 
-                const spiltDate = date.split('/') // 1 = month, 0 = day, 2 = year
-                const format = new Date(`${spiltDate[2]}-${spiltDate[1]}-${spiltDate[0]}`)
+                // spilt and parse to number
+                const spiltDate = date.split('/').map((d) => Number(d)) // [mm, dd, yyyy] 
+                // if year > 2500, minus 543
+
+                const format = new Date(spiltDate[2] > 2500 ? spiltDate[2] - 543 : spiltDate[2], spiltDate[0] - 1, spiltDate[1])
 
                 return (
                     <Stack key={date} w="full" borderRadius={10} spacing={3} flex="auto" bgColor="white" mt={4}>
