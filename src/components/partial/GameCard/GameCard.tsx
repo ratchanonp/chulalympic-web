@@ -14,18 +14,6 @@ interface Props {
     isLoading?: boolean;
 }
 
-function Schedule() {
-    return (
-        <Stack align="center" spacing={0} mx="auto">
-            <Icon color="pink.400" as={AiFillClockCircle} />
-            <Text fontFamily="athiti" color="pink.400" fontWeight="bold">
-                {" "}
-                12.00
-            </Text>
-        </Stack>
-    );
-}
-
 function GameCard(props: Props) {
 
     const mobileOnly = useBreakpointValue({
@@ -303,9 +291,9 @@ function getTime(date: Date) {
 
 function ParticipantTable({ participant, status }: { participant: Participant[], status: GameStatus }) {
 
-    // sort by score high to low
-    let sorted, scoreTypeLabel;
+    let sorted, scoreTypeLabel;1
     if (participant[0]?.scoreType == "POINT") sorted = [...participant].sort((a, b) => b.value - a.value);
+    else if (participant[0]?.scoreType == "TIME") sorted = [...participant].sort((a, b) => a.value - b.value);
     else sorted = [...participant].sort((a, b) => a.value - b.value);
 
     switch (participant[0]?.scoreType) {
