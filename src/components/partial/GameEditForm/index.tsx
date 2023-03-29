@@ -102,7 +102,7 @@ export default function GameEditForm(props: Props) {
                             facultyId: Number(participant.facultyId),
                             scoreType: values.scoreType,
                             value: Number(participant.value),
-                            medal: participant.medal ? participant.medal : null,
+                            medal: participant.medal && participant.medal != "None" ? participant.medal : null,
                             note: participant.note
                         })),
                     note: values.note
