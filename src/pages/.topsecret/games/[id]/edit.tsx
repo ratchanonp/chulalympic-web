@@ -56,8 +56,8 @@ export default function GameEdit({ }: Props) {
                 <Flex>
                     <Container fontFamily="athiti" position="relative" py={0} pt={2} pb={4}>
                         <HStack justifyContent="space-between">
-                            <Link href={`/secret/games/${previousId}/edit`}><ChevronLeftIcon /> {previousId}</Link>
-                            <Link href={`/secret/games/${nextId}/edit`}>{nextId}<ChevronRightIcon /></Link>
+                            <Link href={`/.topsecret/games/${previousId}/edit`}><ChevronLeftIcon /> {previousId}</Link>
+                            <Link href={`/.topsecret/games/${nextId}/edit`}>{nextId}<ChevronRightIcon /></Link>
                         </HStack>
                     </Container >
                 </Flex>
