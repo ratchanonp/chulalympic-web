@@ -71,7 +71,7 @@ const LoginPage: NextPage = () => {
                                         <PasswordField id="password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                                     </FormControl>
                                 </Stack>
-                                <Button type="submit" colorScheme="brand" variant="solid">Sign in</Button>
+                                <Button type="submit" colorScheme="brand" variant="solid" isLoading={formik.isSubmitting} loadingText="Signing in...">Sign in</Button>
                             </Stack>
                         </form>
                     </Box>
