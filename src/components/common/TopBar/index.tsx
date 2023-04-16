@@ -49,7 +49,7 @@ const TopBar = (props: Props) => {
                 <MenuButton as={Button} rightIcon={<ChevronDownIcon />} leftIcon={<Icon as={BiUserCircle} fontSize="2xl" />} bg="white" size="lg" border="2px solid" borderColor="gray.200">
                     {isLoading ? <Skeleton height="20px" width="150px" /> : data?.name}
                 </MenuButton>
-                <MenuList>
+                <MenuList zIndex={20}>
                     <MenuItem color="red" onClick={() => dispatch(signOut())}><Icon as={FaSignOutAlt} mr={2} />Logout</MenuItem>
                 </MenuList>
             </Menu>
