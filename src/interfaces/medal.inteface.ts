@@ -4,7 +4,7 @@ export interface Medal {
     gold: number;
     silver: number;
     bronze: number;
-    total: number;
+    Total: number;
 }
 
 export type MedalsResponse = Medal[];
