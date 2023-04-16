@@ -23,6 +23,7 @@ const AdminLayout = ({ children }: Props) => {
         if (!isAuthenticated) router.push('/auth/login')
     });
 
+    if (!isAuthenticated) return null;
     if (!router.isReady) return null;
     return (
         <>
