@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { useFormik } from 'formik'
 import { NextPage } from 'next'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -37,41 +38,46 @@ const LoginPage: NextPage = () => {
 
     if (isAuthenticated) router.push('/admin')
     return (
-        <Container maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }} fontFamily="athiti" >
-            <Stack spacing="8">
-                <Stack spacing="6">
-                    <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
-                        <Flex justifyContent="center" fontSize="5xl" fontWeight="black">
-                            <WebName />
-                        </Flex>
-                        <Heading fontFamily="kanit" size={{ base: 'xs', md: 'sm' }}>Log in to your account</Heading>
-                    </Stack>
-                </Stack>
-                <Box
-                    py={{ base: '0', sm: '8' }}
-                    px={{ base: '4', sm: '10' }}
-                    bg={{ base: 'transparent', sm: 'bg-surface' }}
-                    boxShadow={{ base: 'none', sm: 'md' }}
-                    borderRadius={{ base: 'none', sm: 'xl' }}
-                >
-                    <form onSubmit={formik.handleSubmit}>
-                        <Stack spacing="6">
-                            <Stack spacing="5">
-                                <FormControl>
-                                    <FormLabel htmlFor="email">Username</FormLabel>
-                                    <Input id="username" type="text" value={formik.values.username} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel htmlFor="password">Password</FormLabel>
-                                    <PasswordField id="password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                                </FormControl>
-                            </Stack>
-                            <Button type="submit" colorScheme="brand" variant="solid">Sign in</Button>
+        <>
+            <Head>
+                <title>Sign in | Chulalympic</title>
+            </Head>
+            <Container maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }} fontFamily="athiti" >
+                <Stack spacing="8">
+                    <Stack spacing="6">
+                        <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
+                            <Flex justifyContent="center" fontSize="5xl" fontWeight="black">
+                                <WebName />
+                            </Flex>
+                            <Heading fontFamily="kanit" size={{ base: 'xs', md: 'sm' }}>Log in to your account</Heading>
                         </Stack>
-                    </form>
-                </Box>
-            </Stack>
-        </Container >
+                    </Stack>
+                    <Box
+                        py={{ base: '0', sm: '8' }}
+                        px={{ base: '4', sm: '10' }}
+                        bg={{ base: 'transparent', sm: 'bg-surface' }}
+                        boxShadow={{ base: 'none', sm: 'md' }}
+                        borderRadius={{ base: 'none', sm: 'xl' }}
+                    >
+                        <form onSubmit={formik.handleSubmit}>
+                            <Stack spacing="6">
+                                <Stack spacing="5">
+                                    <FormControl>
+                                        <FormLabel htmlFor="email">Username</FormLabel>
+                                        <Input id="username" type="text" value={formik.values.username} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel htmlFor="password">Password</FormLabel>
+                                        <PasswordField id="password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                                    </FormControl>
+                                </Stack>
+                                <Button type="submit" colorScheme="brand" variant="solid">Sign in</Button>
+                            </Stack>
+                        </form>
+                    </Box>
+                </Stack>
+            </Container >
+        </>
     )
 }
 
