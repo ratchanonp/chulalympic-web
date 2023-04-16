@@ -1,6 +1,6 @@
 import { Text } from "@chakra-ui/react";
 
-export function WebName() {
+export default function WebName() {
     return (
         <>
             <Text as="span" color="pink.400" textTransform="uppercase">

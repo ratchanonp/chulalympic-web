@@ -1,9 +1,12 @@
 import { Game, GameStatus, Participant } from "@/interfaces/game.interface";
 import { SportCategory } from "@/interfaces/sport.interface";
+import { useDeleteGameMutation } from "@/services/games";
 import { medalLabel } from "@/utils/medalformat";
 import formatTimeAgo from "@/utils/timeformat";
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Badge, Box, Flex, HStack, Icon, Stack, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue, VStack } from "@chakra-ui/react";
-import { AiFillClockCircle, AiFillEnvironment, AiFillInfoCircle } from "react-icons/ai/";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Badge, Box, Button, Flex, HStack, Icon, Stack, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue, useDisclosure, useToast, VStack } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { useRef } from "react";
+import { AiFillEnvironment, AiFillInfoCircle } from "react-icons/ai/";
 import { BsDot } from "react-icons/bs";
 import GameCardSkeleton from "./GameCardSkeleton";
 
@@ -12,9 +15,16 @@ interface Props {
     gameData?: Game;
     isShowSportType?: boolean;
     isLoading?: boolean;
+    canEdit?: boolean;
 }
 
 function GameCard(props: Props) {
+
+    const router = useRouter();
+    const cancelRef = useRef(null);
+    const toast = useToast();
+
+    const [deleteGame] = useDeleteGameMutation();
 
     const mobileOnly = useBreakpointValue({
         base: "flex",
@@ -26,8 +36,9 @@ function GameCard(props: Props) {
         md: "flex",
     });
 
+    const { isOpen, onClose, onOpen } = useDisclosure()
 
-    const { isShowSportType = true, isLoading, gameData } = props;
+    const { isShowSportType = true, isLoading, gameData, canEdit } = props;
 
     if (isLoading) return (<GameCardSkeleton />);
     if (!gameData) return (<></>);
@@ -36,118 +47,159 @@ function GameCard(props: Props) {
 
     const rtf = new Intl.RelativeTimeFormat("th", { numeric: "auto" });
 
+    const handleDelete = async () => {
+        await deleteGame(id).unwrap()
+            .then(() => { toast({ title: "Delete Success", status: "success" }) })
+            .catch(() => { toast({ title: "Delete Failed", status: "error" }) })
+
+        onClose();
+    }
+
 
     return (
-        <Accordion allowMultiple>
-            <AccordionItem
-                w="100%"
-                borderRadius={10}
-                p={{
-                    base: 2,
-                    md: 5,
-                }}
-                border="2px"
-                borderColor="gray.100"
-                bg="white"
-            >
-                {({ isExpanded }) => (
-                    <>
-                        <AccordionButton w="100%" _hover={{}}>
-                            <VStack w="100%" justifyContent="start" alignItems="start">
+        <>
+            <Accordion allowMultiple>
+                <AccordionItem
 
-                                <Flex w="full">
-                                    <Status status={status} />
-                                    <Text ml={2} display="flex" alignItems="center" justifyContent="center" fontFamily="athiti" fontSize={{
-                                        base: "xs",
-                                        md: "md",
-                                    }}> <Icon as={AiFillEnvironment} mr={1} /> {venue.name} </Text>
+                    w="100%"
+                    borderRadius={10}
+                    p={{
+                        base: 2,
+                        md: 5,
+                    }}
+                    border="2px"
+                    borderColor="gray.100"
+                    bg="white"
+                >
+                    {({ isExpanded }) => (
+                        <>
+                            <AccordionButton w="100%" _hover={{}}>
+                                <VStack w="100%" justifyContent="start" alignItems="start">
 
+                                    <Flex w="full" justifyContent="space-between">
+                                        <Flex>
+                                            <Status status={status} />
+                                            <Text ml={2} display="flex" alignItems="center" justifyContent="center" fontFamily="athiti" fontSize={{
+                                                base: "xs",
+                                                md: "md",
+                                            }}> <Icon as={AiFillEnvironment} mr={1} /> {venue.name} </Text>
+                                        </Flex>
 
-                                </Flex>
-                                <HStack
-                                    w="100%"
-                                    display="flex"
-                                    spacing={{
-                                        base: 0,
-                                        md: 16,
-                                    }}
-                                    alignItems="start"
-                                >
-                                    <Flex
-                                        flex={1}
-                                        textAlign="left"
-                                        w="full"
-                                        justifyContent="start"
-                                        alignItems="end"
+                                        {canEdit && (
+                                            <HStack>
+                                                <Button onClick={() => router.push(`/admin/games/${id}/edit`)} colorScheme="yellow" size="xs">แก้ไข</Button>
+                                                <Button onClick={onOpen} colorScheme="red" size="xs">ลบ</Button>
+                                            </HStack>
+                                        )}
+                                    </Flex>
+                                    <HStack
+                                        w="100%"
+                                        display="flex"
+                                        spacing={{
+                                            base: 0,
+                                            md: 16,
+                                        }}
+                                        alignItems="start"
                                     >
-                                        {status == GameStatus.SCHEDULED && (<VStack spacing={0} alignItems="left" mr={5} display={["none", "block"]}>
-                                            <Text
-                                                textColor="gray.400"
-                                                fontSize="sm"
-                                                fontFamily="athiti"
-                                                fontWeight="500"
-
-                                            >
-                                                เวลา
-                                            </Text>
-                                            <Text
-                                                fontFamily="athiti"
-                                                fontSize={{ base: "md", md: "2xl" }}
-                                                fontWeight="bold"
-                                                w="auto"
-                                                noOfLines={1}
-                                            >
-                                                <Badge
+                                        <Flex
+                                            flex={1}
+                                            textAlign="left"
+                                            w="full"
+                                            justifyContent="start"
+                                            alignItems="end"
+                                        >
+                                            {status == GameStatus.SCHEDULED && (<VStack spacing={0} alignItems="left" mr={5} display={["none", "block"]}>
+                                                <Text
+                                                    textColor="gray.400"
+                                                    fontSize="sm"
                                                     fontFamily="athiti"
-                                                    colorScheme="pink"
-                                                    textColor="pink.400"
+                                                    fontWeight="500"
+
+                                                >
+                                                    เวลา
+                                                </Text>
+                                                <Text
+                                                    fontFamily="athiti"
                                                     fontSize={{ base: "md", md: "2xl" }}
                                                     fontWeight="bold"
+                                                    w="auto"
+                                                    noOfLines={1}
                                                 >
-                                                    {getTime(new Date(start))}
-                                                </Badge>
-                                            </Text>
-                                        </VStack>)}
-                                        <VStack spacing={0} alignItems="left" w={["40%", (participant.length != 2 || isExpanded ? "40%" : "20%")]}>
-                                            <Text
-                                                textColor="gray.400"
-                                                fontSize="sm"
-                                                fontFamily="athiti"
-                                                fontWeight="500"
-                                            >
-                                                กีฬา
-                                            </Text>
-                                            <Text
-                                                fontFamily="athiti"
-                                                fontSize={{ base: "md", md: "2xl" }}
-                                                fontWeight="bold"
-                                                w="auto"
-                                                noOfLines={1}
-                                            >
-                                                {sport.name}
-                                            </Text>
-                                        </VStack>
-                                        {participant.length == 2 && !isExpanded && (<VSScore participants={participant} start={new Date(start)} status={status} />)}
-                                        {participant.length == 2 && isExpanded && (<MoreDetail start={new Date(start)} sportCategory={sportCategory} />)}
-                                        {participant.length != 2 && (<MoreDetail start={new Date(start)} sportCategory={sportCategory} />)}
-                                    </Flex>
-                                </HStack>
-                                <HStack divider={<><Icon as={BsDot} color="gray.200" /></>}>
-                                    <Text fontSize="sm" fontFamily="athiti" color="gray.300">{id}</Text>
-                                    <Text fontSize="sm" fontFamily="athiti" color="gray.300">{formatTimeAgo(new Date(updatedAt))}</Text>
-                                </HStack>
-                            </VStack>
-                            {participant.length > 2 && (<Flex ml="auto" pl={2}>
-                                <AccordionIcon />
-                            </Flex>)}
-                        </AccordionButton>
-                        <AccordionPanel>
-                            <ParticipantTable participant={participant} status={status} />
-                            {note && (<Text fontFamily="athiti" fontWeight="bold" mt={2}>หมายเหตุ: <Text as="span" fontWeight="normal">{note}</Text></Text>)}
-                        </AccordionPanel>
-                    </>)}
-            </AccordionItem>
-        </Accordion >
+                                                    <Badge
+                                                        fontFamily="athiti"
+                                                        colorScheme="pink"
+                                                        textColor="pink.400"
+                                                        fontSize={{ base: "md", md: "2xl" }}
+                                                        fontWeight="bold"
+                                                    >
+                                                        {getTime(new Date(start))}
+                                                    </Badge>
+                                                </Text>
+                                            </VStack>)}
+                                            <VStack spacing={0} alignItems="left" w={["40%", (participant.length != 2 || isExpanded ? "40%" : "20%")]}>
+                                                <Text
+                                                    textColor="gray.400"
+                                                    fontSize="sm"
+                                                    fontFamily="athiti"
+                                                    fontWeight="500"
+                                                >
+                                                    กีฬา
+                                                </Text>
+                                                <Text
+                                                    fontFamily="athiti"
+                                                    fontSize={{ base: "md", md: "2xl" }}
+                                                    fontWeight="bold"
+                                                    w="auto"
+                                                    noOfLines={1}
+                                                >
+                                                    {sport.name}
+                                                </Text>
+                                            </VStack>
+                                            {participant.length == 2 && !isExpanded && (<VSScore participants={participant} start={new Date(start)} status={status} />)}
+                                            {participant.length == 2 && isExpanded && (<MoreDetail start={new Date(start)} sportCategory={sportCategory} />)}
+                                            {participant.length != 2 && (<MoreDetail start={new Date(start)} sportCategory={sportCategory} />)}
+                                        </Flex>
+                                    </HStack>
+                                    <HStack divider={<><Icon as={BsDot} color="gray.200" /></>}>
+                                        <Text fontSize="sm" fontFamily="athiti" color="gray.300">{id}</Text>
+                                        <Text fontSize="sm" fontFamily="athiti" color="gray.300">{formatTimeAgo(new Date(updatedAt))}</Text>
+                                    </HStack>
+                                </VStack>
+                                {participant.length > 2 && (<Flex ml="auto" pl={2}>
+                                    <AccordionIcon />
+                                </Flex>)}
+                            </AccordionButton>
+                            <AccordionPanel>
+                                <ParticipantTable participant={participant} status={status} />
+                                {note && (<Text fontFamily="athiti" fontWeight="bold" mt={2}>หมายเหตุ: <Text as="span" fontWeight="normal">{note}</Text></Text>)}
+                            </AccordionPanel>
+                        </>)}
+                </AccordionItem>
+            </Accordion >
+            <AlertDialog
+                isOpen={isOpen}
+                leastDestructiveRef={cancelRef}
+                onClose={onClose}
+            >
+                <AlertDialogOverlay>
+                    <AlertDialogContent>
+                        <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                            ยืนยันการลบ
+                        </AlertDialogHeader>
+
+                        <AlertDialogBody>
+                            ต้องการลบ <Text as="span" fontWeight="bold">{id}</Text> ใช่หรือไม่
+                            <br />การลบข้อมูลจะไม่สามารถย้อนกลับได้
+                        </AlertDialogBody>
+
+                        <AlertDialogFooter>
+                            <Button colorScheme="red" onClick={handleDelete} mr={3}> ลบ </Button>
+                            <Button ref={cancelRef} onClick={onClose}> ยกเลิก </Button>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialogOverlay>
+            </AlertDialog>
+        </>
     );
 }
 
@@ -291,7 +343,7 @@ function getTime(date: Date) {
 
 function ParticipantTable({ participant, status }: { participant: Participant[], status: GameStatus }) {
 
-    let sorted, scoreTypeLabel;1
+    let sorted, scoreTypeLabel; 1
     if (participant[0]?.scoreType == "POINT") sorted = [...participant].sort((a, b) => b.value - a.value);
     else if (participant[0]?.scoreType == "TIME") sorted = [...participant].sort((a, b) => a.value - b.value);
     else sorted = [...participant].sort((a, b) => a.value - b.value);

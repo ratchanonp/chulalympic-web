@@ -1,13 +1,13 @@
 import Container from "@/components/common/Chakra/Container/Container";
-import GameEditForm from "@/components/partial/GameEditForm";
+import AdminLayout from "@/components/layout/AdminLayout";
+import GameEditForm from "@/components/partial/Form/GameEditForm";
 import { useGetFacultiesQuery } from "@/services/faculty";
 import { useLazyGetGameQuery } from "@/services/games";
 import { useGetVenuesQuery } from "@/services/venue";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { Box, Flex, Heading, HStack, Icon, Link, Stack } from "@chakra-ui/react";
-import NextLink from "next/link";
+import { Box, Flex, HStack, Link, Stack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { ReactElement, useEffect } from "react";
 
 type Props = {}
 
@@ -41,13 +41,8 @@ export default function GameEdit({ }: Props) {
     const nextId = data.id.slice(0, -4) + (parseInt(data.id.slice(-4)) + 1).toString().padStart(4, '0');
 
     return (
-        <Box w="full" position="relative">
+        <Box w="full" position="relative" bg="white" borderRadius="xl" p={5} h="fit-content">
             <Stack>
-                <Flex position="sticky" top={0} zIndex={1} bg="white" direction="row" alignItems="center" py={2} shadow="sm">
-                    <Container py={0}>
-                        <Link as={NextLink} display="flex" alignItems="center" href="/secret/games"> <Icon fontSize="5xl" as={ChevronLeftIcon} mr={1} />  <Heading>{data.id}</Heading></Link>
-                    </Container>
-                </Flex>
                 <Flex>
                     <Container fontFamily="athiti" position="relative" py={0} pt={2} pb={4}>
                         <GameEditForm gameData={data} venuesData={Venue} facultiesData={Faculty} fetchGameData={fetchData} />
@@ -63,5 +58,13 @@ export default function GameEdit({ }: Props) {
                 </Flex>
             </Stack >
         </Box>
+    )
+}
+
+GameEdit.getLayout = function getLayout(page: ReactElement) {
+    return (
+        <AdminLayout>
+            {page}
+        </AdminLayout>
     )
 }

@@ -2,13 +2,16 @@ import { useAppSelector } from "@/hooks";
 import { GameStatus } from "@/interfaces/game.interface";
 import { useLazyGetGamesQuery } from "@/services/games";
 import { Icon, Stack, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { SlMagnifier } from "react-icons/sl";
 import { GameCard } from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 
 export function GameCardList() {
+
   const [trigger, { data: games, isLoading, error }] = useLazyGetGamesQuery();
+  const router = useRouter();
 
   const filter = useAppSelector((state) => state.filter);
   const { } = filter;
@@ -28,7 +31,7 @@ export function GameCardList() {
   }
 
   if (error || !games) return (
-    <Stack w="full" borderRadius={10} spacing={3} flex="auto" bgColor="white" py={4} alignItems="center" justifyContent="center">
+    <Stack w="full" borderRadius={10} spacing={3} flex="auto" bgColor="white" py={5} alignItems="center" justifyContent="center">
       <Icon as={SlMagnifier} w={20} h={20} color="gray.400" />
       <Text textAlign="center" fontSize="2xl" fontFamily="athiti" fontWeight="medium" >ไม่พบผลการค้นหา</Text>
     </Stack>
@@ -52,7 +55,7 @@ export function GameCardList() {
   return (
     <Stack w="full" borderRadius={10} spacing={3} flex="auto">
       {sorted.map((game, i) => (
-        <GameCard key={i} gameData={game} />
+        <GameCard key={i} gameData={game} canEdit={router.pathname.includes("admin")} />
       ))}
     </Stack>
   );

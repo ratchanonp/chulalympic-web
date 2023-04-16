@@ -2,7 +2,7 @@ import { navbarItems } from "@/constant/nav";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Button, Container, Flex, Heading, Icon, useDisclosure } from "@chakra-ui/react";
 import Link from "next/link";
-import { WebName } from "../WebName/WebName";
+import WebName from "../WebName/WebName";
 import { MobileNavbar } from "./MobileNavbar";
 
 function Navbar() {

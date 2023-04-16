@@ -1,9 +1,9 @@
 const ROUND_TYPE = [
     { value: "REGULAR", label: "ปกติ" },
-    { value: "QUALIFYING", label: "รอบคัดเลือก" },
-    { value: "QUARTER_FINAL", label: "รอบก่อนชิงชนะเลิศ (8)" },
-    { value: "SEMI_FINAL", label: "รอบรองชนะเลิศ (4)" },
-    { value: "FINAL", label: "รอบชิงชนะเลิศ" },
+    { value: "QUALIFYING", label: "คัดเลือก" },
+    { value: "QUARTER_FINAL", label: "ก่อนชิงชนะเลิศ (8)" },
+    { value: "SEMI_FINAL", label: "รองชนะเลิศ (4)" },
+    { value: "FINAL", label: "ชิงชนะเลิศ" },
 ]
 
 const SCORE_TYPE = [

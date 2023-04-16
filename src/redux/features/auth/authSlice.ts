@@ -10,25 +10,23 @@ const slice = createSlice({
     reducers: {
         signIn: (state, action: PayloadAction<Omit<AuthPayload, "isAuthenticated">>) => {
 
-            const { accessToken, refreshToken } = action.payload;
+            const { accessToken } = action.payload;
 
             localStorage.setItem("accessToken", accessToken);
-            localStorage.setItem("refreshToken", refreshToken);
 
             state.accessToken = accessToken;
-            state.refreshToken = refreshToken;
             state.isAuthenticated = true;
         },
-        signOut: () => {
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
+        signOut: (state, action: PayloadAction<void>) => {
+            state.accessToken = null;
+            state.isAuthenticated = false;
 
-            return initialState
+            localStorage.removeItem("accessToken");
         },
     },
 });
 
-export const { signOut } = slice.actions;
+export const { signIn, signOut } = slice.actions;
 export default slice.reducer;
 
 export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
@@ -39,7 +37,6 @@ function getInitialData(): AuthState {
     // Client side rendering
     if (typeof window === "undefined") return {
         accessToken: null,
-        refreshToken: null,
         isAuthenticated: false,
     }
 
@@ -50,7 +47,6 @@ function getInitialData(): AuthState {
 
     return {
         accessToken,
-        refreshToken,
         isAuthenticated,
     };
 }

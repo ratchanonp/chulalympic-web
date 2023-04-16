@@ -132,7 +132,7 @@ export default function GameCreateForm() {
                             <FormControl>
                                 <FormLabel fontWeight="semibold"><Icon as={MdOutlineSportsHandball} mr={1} />ประเภทการแข่ง</FormLabel>
                                 <RadioGroup id="type" name="type" aria-required={true} value={values.type}>
-                                    <Grid templateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gap={2}>
+                                    <Grid templateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]}>
                                         {ROUND_TYPE.map(roundType => (
                                             <Radio key={roundType.value} value={roundType.value} onChange={handleChange}>{roundType.label}</Radio>
                                         ))}

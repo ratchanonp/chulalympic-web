@@ -14,9 +14,11 @@ export const gamesApi = api.injectEndpoints({
                     facultyId: filter.faculty,
                 },
             }),
+            providesTags: ["Game"],
         }),
         getGame: build.query<Game, string>({
             query: (id) => `games/${id}`,
+            providesTags: ["Game"],
         }),
         getDates: build.query<string[], void>({
             query: () => "games/dates",
@@ -27,6 +29,7 @@ export const gamesApi = api.injectEndpoints({
                 method: "POST",
                 body: game,
             }),
+            invalidatesTags: ["Game"],
         }),
         updateGame: build.mutation<GameResponse, UpdateGame>({
             query: (game) => ({
@@ -34,8 +37,16 @@ export const gamesApi = api.injectEndpoints({
                 method: "PATCH",
                 body: game,
             }),
-        })
+            invalidatesTags: ["Game"],
+        }),
+        deleteGame: build.mutation<void, string>({
+            query: (id) => ({
+                url: `/games/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Game"],
+        }),
     }),
 });
 
-export const { useLazyGetGamesQuery, useGetGamesQuery, useGetDatesQuery, useCreateGameMutation, useLazyGetGameQuery, useUpdateGameMutation } = gamesApi;
+export const { useLazyGetGamesQuery, useGetGamesQuery, useGetDatesQuery, useCreateGameMutation, useLazyGetGameQuery, useUpdateGameMutation, useDeleteGameMutation } = gamesApi;

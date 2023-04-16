@@ -16,4 +16,5 @@ export const api = createApi({
     reducerPath: "spiltApi",
     baseQuery: baseQuery,
     endpoints: () => ({}),
+    tagTypes: ["User", "Medal", "Venue", "Faculty", "Game", "Sport"],
 });
