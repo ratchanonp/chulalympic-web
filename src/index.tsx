@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react"
+import { Flex, Heading } from "@chakra-ui/react"
 
 type Props = {}
 
@@ -10,7 +10,9 @@ const HomePage = (props: Props) => {
             justifyContent="center"
             alignItems="center"
         >
-            We&apos;re closed.
+            <Heading variant="h1" size="4xl">
+                We&apos;re closed.
+            </Heading>
         </Flex>
     )
 }
