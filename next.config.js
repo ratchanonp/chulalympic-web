@@ -7,10 +7,15 @@ module.exports = {
   ...nextConfig,
   async redirects() {
     return [
+      // {
+      //   source: "/admin",
+      //   destination: "/admin/dashboard",
+      //   permanent: true,
+      // },
       {
-        source: "/admin",
-        destination: "/admin/dashboard",
-        permanent: true,
+        source: "/((?!close).*)",
+        destination: "/close",
+        permanent: false,
       },
     ];
   },
