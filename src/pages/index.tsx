@@ -18,7 +18,7 @@ import {
     Text,
     useDisclosure
 } from "@chakra-ui/react";
-import Lottie from "lottie-react";
+
 import { BiFilterAlt } from "react-icons/bi";
 import { MdSportsHandball } from "react-icons/md";
 
@@ -26,9 +26,11 @@ import { GameCardList } from "@/components/partial/GameCard/GameCardList";
 import animation from "@/lottie/Hero.json";
 import Head from "next/head";
 import { AiFillHeart } from "react-icons/ai";
+import dynamic from "next/dynamic";
 
 function HomePage() {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
     return (
         <>
